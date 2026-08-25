@@ -9,152 +9,230 @@
 <link rel="stylesheet" href="style.css">
 <style>
 #view-toggle {
-    position: fixed; top: 20px; right: 20px; z-index: 1000;
-    color: white; font-size: 24px; cursor: pointer;
-    display: none; transition: transform 0.3s ease, opacity 0.3s ease;
-    text-shadow: 0 0 10px rgba(0,0,0,0.5); opacity: 0.8;
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 9999;
+    color: white; 
+    font-size: 24px; 
+    cursor: pointer;
+    display: none; 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    text-shadow: 0 0 10px rgb(240 123 247);
+    opacity: 0.8;
 }
-#view-toggle:hover { transform: scale(1.1); opacity: 1; }
-#content, #badges-container, #volume-control, #bg-video {
-    transition: opacity 0.3s ease, filter 0.3s ease;
+#view-toggle:hover { 
+    transform: scale(1.1); 
+    opacity: 1; 
+}
+#content, #volume-control {
+    transition: opacity 0.3s ease;
 }
 </style>
 </head>
 <body>
-<video id="bg-video" autoplay loop muted playsinline>
-<source src="source/video.mp4" type="video/mp4">
+<div id="bunny">🐇</div>
+<video id="bg-video" autoplay loop muted playsinline preload="auto">
+    <source src="https://res.cloudinary.com/ld3xgxn4/video/upload/v1787675344/Anime2.mp4" type="video/mp4">
 </video>
-<audio id="bg-audio" loop>
-<source src="source/sound.mp3" type="audio/mp3">
+<audio id="bg-audio" loop preload="auto">
+    <source src="source/sound.mp3" type="audio/mp3">
 </audio>
 
 <div id="overlay" onclick="startExperience()">
-<div class="click-text"> 🏳️‍⚧️ </div>
+    <div class="click-text"> 🏳️‍⚧️ </div>
 </div>
+
 <div id="view-toggle" title="Ocultar/Mostrar Interface">
     <i class="fas fa-eye" id="view-icon"></i>
 </div>
+
 <div id="volume-control">
-<i class="fas fa-volume-up" id="volume-icon" style="cursor: pointer;"></i>
-<input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+    <i class="fas fa-volume-up" id="volume-icon" style="cursor: pointer;"></i>
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
 </div>
+
 <div id="content">
-<img src="source/avatar.png" alt="Avatar Sayuri" class="avatar">
-<div class="username">yThay</div>
-<div class="bio">
-🏳️‍⚧️ Player de Minecraft 🏳️‍⚧️<br>
-<div class="sub-counter" id="yt-counter" style="display: flex;">
-<i class="fas fa-code"></i> <span>Hm</span>
-</div>
-</div>
-<div class="social-links">
-<a href="https://github.com/" target="_blank"><i class="fab fa-github" title="GitHub"></i></a>
-<a href="https://discord.com/" target="_blank"><i class="fab fa-discord" title="Discord"></i></a>
-<a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube" title="YouTube"></i></a>
-</div>
+    <img src="source/avatar.png" alt="Avatar Sayuri" class="avatar">
+    <div class="username">yThay</div>
+    <div class="bio">
+        Player de Minecraft<br>
+        <div class="sub-counter" id="yt-counter" style="display: flex;">
+            <i class="fas fa-code"></i> <span>Hm</span>
+        </div>
+    </div>
+    <div class="social-links">
+<a href="https://pt.namemc.com/profile/ythayla" target="_blank" class="social-icon namemc-icon" title="NameMC">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
+        <path d="M0 0v24h24V0H0zm4.5 4.5h4.125l5.25 8.25V4.5h4.125v15h-4.125l-5.25-8.25v8.25H4.5V4.5z"/>
+    </svg>
+</a>
+		<a href="https://steam.com" target="_blank"><i class="fab fa-steam" title="Steam"></i></a>
+        <a href="https://spotify.com/" target="_blank"><i class="fab fa-spotify" title="Spotify"></i></a>
+        <a href="https://discord.com/" target="_blank"><i class="fab fa-discord" title="Discord"></i></a>
+        <a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube" title="YouTube"></i></a>
+    </div>
 </div> 
 <script>
 function startExperience() {
-  var overlay = document.getElementById('overlay');
-  var content = document.getElementById('content');
-  var volumeControl = document.getElementById('volume-control');
-  var viewToggle = document.getElementById('view-toggle');
-  var video = document.getElementById('bg-video');
-  var audio = document.getElementById('bg-audio');
-  overlay.style.opacity = '0';
-  setTimeout(function() { overlay.style.display = 'none'; }, 500);
-  content.style.display = 'block';
-  volumeControl.style.display = 'flex';
-  viewToggle.style.display = 'block';
-  setTimeout(function() {
-    content.style.opacity = '1';
-    volumeControl.style.opacity = '1';
-  }, 100);
-  
-  video.play();
-  video.style.filter = "brightness(0.5)";
-  audio.volume = 1.0; 
-  audio.play().catch(e => console.log("Áudio bloqueado pelo navegador"));
+    var overlay = document.getElementById('overlay');
+    var content = document.getElementById('content');
+    var volumeControl = document.getElementById('volume-control');
+    var viewToggle = document.getElementById('view-toggle');
+    var video = document.getElementById('bg-video');
+    var audio = document.getElementById('bg-audio');
+    overlay.style.pointerEvents = 'none';
+    overlay.style.opacity = '0';
+    setTimeout(function() { 
+        overlay.style.display = 'none'; 
+    }, 400);
+    content.style.display = 'block';
+    volumeControl.style.display = 'flex';
+    viewToggle.style.display = 'block';
+    setTimeout(function() {
+        content.style.opacity = '1';
+        volumeControl.style.opacity = '1';
+    }, 50);
+    video.play().catch(e => console.log("Vídeo com erro ao reproduzir:", e));
+    audio.volume = 1.0; 
+    audio.play().catch(e => console.log("Áudio bloqueado pelo navegador"));
 }
 var volumeSlider = document.getElementById('volume-slider');
 var audio = document.getElementById('bg-audio');
 var volumeIcon = document.getElementById('volume-icon');
 var ultimoVolume = 1.0;
 volumeSlider.addEventListener('input', function() {
-  audio.volume = this.value;
-  if (this.value > 0) ultimoVolume = this.value;
-  atualizarIcone(this.value);
+    audio.volume = this.value;
+    if (this.value > 0) ultimoVolume = this.value;
+    atualizarIcone(this.value);
 });
 volumeIcon.addEventListener('click', function() {
-  if (audio.volume > 0) {
-    audio.volume = 0; volumeSlider.value = 0; atualizarIcone(0);
-  } else {
-    var volumeParaVoltar = ultimoVolume > 0 ? ultimoVolume : 1.0;
-    audio.volume = volumeParaVoltar; volumeSlider.value = volumeParaVoltar; atualizarIcone(volumeParaVoltar);
-  }
+    if (audio.volume > 0) {
+        audio.volume = 0; 
+        volumeSlider.value = 0; 
+        atualizarIcone(0);
+    } else {
+        var volumeParaVoltar = ultimoVolume > 0 ? ultimoVolume : 1.0;
+        audio.volume = volumeParaVoltar; 
+        volumeSlider.value = volumeParaVoltar; 
+        atualizarIcone(volumeParaVoltar);
+    }
 });
 function atualizarIcone(valor) {
-  if (valor == 0) volumeIcon.className = 'fas fa-volume-mute';
-  else if (valor < 0.5) volumeIcon.className = 'fas fa-volume-down';
-  else volumeIcon.className = 'fas fa-volume-up'; 
+    if (valor == 0) volumeIcon.className = 'fas fa-volume-mute';
+    else if (valor < 0.5) volumeIcon.className = 'fas fa-volume-down';
+    else volumeIcon.className = 'fas fa-volume-up'; 
 }
 function aplicarInclinacao(e) {
-  var content = document.getElementById("content");
-  if (content.style.display === 'block') {
-    var rect = content.getBoundingClientRect();
-    var centroX = rect.left + rect.width / 2;
-    var centroY = rect.top + rect.height / 2;
-    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    var distanciaX = clientX - centroX;
-    var distanciaY = clientY - centroY;
-    var inclinacaoX = distanciaY / 25; 
-    var inclinacaoY = -(distanciaX / 25);
-    content.style.transform = `translate(-50%, -50%) perspective(1000px) rotateX(${inclinacaoX}deg) rotateY(${inclinacaoY}deg)`;
-  }
+    var content = document.getElementById("content");
+    if (content.style.display === 'block') {
+        var rect = content.getBoundingClientRect();
+        var centroX = rect.left + rect.width / 2;
+        var centroY = rect.top + rect.height / 2;
+        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        var distanciaX = clientX - centroX;
+        var distanciaY = clientY - centroY;
+        var inclinacaoX = distanciaY / 25; 
+        var inclinacaoY = -(distanciaX / 25);
+        content.style.transform = `translate(-50%, -50%) perspective(1000px) rotateX(${inclinacaoX}deg) rotateY(${inclinacaoY}deg)`;
+    }
 }
 document.addEventListener("mousemove", aplicarInclinacao);
 document.addEventListener("touchmove", aplicarInclinacao);
 function removerInclinacao() {
-  var content = document.getElementById("content");
-  if (content.style.display === 'block') {
-    content.style.transform = `translate(-50%, -50%) perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-  }
+    var content = document.getElementById("content");
+    if (content.style.display === 'block') {
+        content.style.transform = `translate(-50%, -50%) perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    }
 }
 document.addEventListener("mouseleave", removerInclinacao);
 document.addEventListener("touchend", removerInclinacao);
 var isUIHidden = false;
 function atualizarVisualizacao() {
-  var video = document.getElementById('bg-video');
-  var content = document.getElementById('content');
-  var volumeControl = document.getElementById('volume-control');
-  var viewIcon = document.getElementById('view-icon');
-  var overlay = document.getElementById('overlay');
-  if (overlay.style.display !== 'none') return;
-  if (isUIHidden) {
-    if (video) video.style.filter = "brightness(1)";
-    if (content) { content.style.opacity = '0'; content.style.pointerEvents = 'none'; }
-    if (volumeControl) { volumeControl.style.opacity = '0'; volumeControl.style.pointerEvents = 'none'; }
-    if (viewIcon) viewIcon.className = 'fas fa-eye-slash'; 
-  } else {
-    if (video) video.style.filter = "brightness(0.5)";
-    if (content) { content.style.opacity = '1'; content.style.pointerEvents = 'auto'; }
-    if (volumeControl) { volumeControl.style.opacity = '1'; volumeControl.style.pointerEvents = 'auto'; }
-    if (viewIcon) viewIcon.className = 'fas fa-eye';
-  }
+    var content = document.getElementById('content');
+    var volumeControl = document.getElementById('volume-control');
+    var viewIcon = document.getElementById('view-icon');
+    var overlay = document.getElementById('overlay');
+    if (overlay.style.display !== 'none') return;
+    if (isUIHidden) {
+        if (content) { content.style.opacity = '0'; content.style.pointerEvents = 'none'; }
+        if (volumeControl) { volumeControl.style.opacity = '0'; volumeControl.style.pointerEvents = 'none'; }
+        if (viewIcon) viewIcon.className = 'fas fa-eye-slash'; 
+    } else {
+        if (content) { content.style.opacity = '1'; content.style.pointerEvents = 'auto'; }
+        if (volumeControl) { volumeControl.style.opacity = '1'; volumeControl.style.pointerEvents = 'auto'; }
+        if (viewIcon) viewIcon.className = 'fas fa-eye';
+    }
 }
 document.getElementById('view-toggle').addEventListener('click', function() {
-  isUIHidden = !isUIHidden;
-  atualizarVisualizacao();
+    isUIHidden = !isUIHidden;
+    atualizarVisualizacao();
 });
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Tab') {
-    e.preventDefault(); 
-    if (e.repeat) return;
-    isUIHidden = !isUIHidden; 
-    atualizarVisualizacao();
-  }
+    if (e.key === 'Tab') {
+        e.preventDefault(); 
+        if (e.repeat) return;
+        isUIHidden = !isUIHidden; 
+        atualizarVisualizacao();
+    }
 });
+</script>
+<script>
+(function() {
+  const bunny = document.getElementById('bunny');
+  if (!bunny) return;
+  let currentX = window.innerWidth / 2;
+  let currentY = window.innerHeight / 2;
+  let mouseX = currentX;
+  let mouseY = currentY;
+  let jumpPhase = 0;
+  let facingRight = false;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 0) {
+      mouseX = e.touches[0].clientX;
+      mouseY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+  function animate() {
+    const dx = mouseX - currentX;
+    const dy = mouseY - currentY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    if (Math.abs(dx) > 2) {
+      facingRight = dx > 0;
+    }
+    let jumpOffsetY = 0;
+    let squash = 1;
+    if (distance > 15) {
+      const speed = 0.3;
+      currentX += (dx / distance) * speed;
+      currentY += (dy / distance) * speed;
+      jumpPhase += 0.12;
+      const jumpHeight = 14;
+      const jumpProgress = Math.sin(jumpPhase);
+      jumpOffsetY = -Math.max(0, jumpProgress) * jumpHeight;
+      if (jumpProgress > 0) {
+        squash = 1 + jumpProgress * 0.15;
+      } else {
+        squash = 1 + jumpProgress * 0.1;
+      }
+    } else {
+      jumpOffsetY = 0;
+      squash = 1;
+    }
+    const scaleX = facingRight ? -1 : 1;
+    bunny.style.transform = `translate(${currentX - 16}px, ${currentY - 24 + jumpOffsetY}px) scaleX(${scaleX}) scaleY(${squash})`;
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
 </script>
 </body>
 </html>
