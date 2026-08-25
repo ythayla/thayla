@@ -147,6 +147,14 @@ document.getElementById('view-toggle').addEventListener('click', function() {
   isUIHidden = !isUIHidden;
   atualizarVisualizacao();
 });
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Tab') {
+    e.preventDefault(); 
+    if (e.repeat) return;
+    isUIHidden = !isUIHidden; 
+    atualizarVisualizacao();
+  }
+});
 </script>
 </body>
 </html>
