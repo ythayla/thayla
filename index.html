@@ -3,99 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://mc-heads.net; media-src 'self' https://res.cloudinary.com https://*.cloudinary.com blob: data:; connect-src 'self' https://res.cloudinary.com https://*.cloudinary.com; object-src 'none'; base-uri 'self';">
 <title>yThay</title>
 <meta name="theme-color" content="#ff4d4d">
+<link rel="icon" type="image/png" href="source/superminime.png">
+<link rel="apple-touch-icon" href="source/superminime.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
-<style>
-#view-toggle {
-    position: fixed; 
-    top: 20px; 
-    right: 20px; 
-    z-index: 9999;
-    color: white; 
-    font-size: 24px; 
-    cursor: pointer;
-    display: none; 
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    text-shadow: 0 0 10px rgb(240 123 247);
-    opacity: 0.8;
-}
-#view-toggle:hover { 
-    transform: scale(1.1); 
-    opacity: 1; 
-}
-#content, #volume-control {
-    transition: opacity 0.3s ease;
-}
-</style>
 </head>
 <body>
-<div id="bunny">🐇</div>
-<video id="bg-video" autoplay loop muted playsinline preload="auto">
+<div id="scroll-dots">
+    <div class="scroll-dot active" data-target=".hero-section" title="Início"></div>
+    <div class="scroll-dot" data-target="#stats" title="Estatísticas"></div>
+</div>
+<video id="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
     <source src="https://res.cloudinary.com/ld3xgxn4/video/upload/v1787675344/Anime2.mp4" type="video/mp4">
 </video>
+<div class="bg-dim"></div>
+<div id="bunny">🐇</div>
 <audio id="bg-audio" loop preload="auto">
     <source src="source/sound.mp3" type="audio/mp3">
 </audio>
-
 <div id="overlay" onclick="startExperience()">
     <div class="click-text"> 🏳️‍⚧️ </div>
 </div>
-
 <div id="view-toggle" title="Ocultar/Mostrar Interface">
     <i class="fas fa-eye" id="view-icon"></i>
 </div>
-
 <div id="volume-control">
-    <i class="fas fa-volume-up" id="volume-icon" style="cursor: pointer;"></i>
+    <i class="fas fa-volume-up" id="volume-icon"></i>
     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
 </div>
+<div class="hero-section">
+    <div id="content">
+        <img src="source/minime.png" alt="Minime Skin" class="hero-minime-side">
 
-<div id="content">
-    <img src="source/avatar.png" alt="Avatar Sayuri" class="avatar">
-    <div class="username">yThay</div>
-    <div class="bio">
-        Player de Minecraft<br>
-        <div class="sub-counter" id="yt-counter" style="display: flex;">
-            <i class="fas fa-code"></i> <span>Hm</span>
+        <img src="source/avatar.png" alt="Avatar Sayuri" class="avatar">
+        <div class="username">yThay</div>
+        <div class="bio">
+            <span>✂ ️</span>
+            <div class="sub-counter" id="yt-counter">
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="https://pt.namemc.com/profile/ythayla" target="_blank" class="social-icon namemc-icon" title="NameMC">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 24" width="1em" height="1em" fill="currentColor">
+                    <path d="M0 0v24h24V0H0zm4.5 4.5h4.125l5.25 8.25V4.5h4.125v15h-4.125l-5.25-8.25v8.25H4.5V4.5z"/>
+                </svg>
+            </a>
+            <a href="https://steamcommunity.com/profiles/76561199241246447" target="_blank"><i class="fab fa-steam" title="Steam"></i></a>
+            <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank"><i class="fab fa-spotify" title="Spotify"></i></a>
+            <a href="http://discordapp.com/users/947175002007015484" target="_blank"><i class="fab fa-discord" title="Discord"></i></a>
+            <a href="https://www.roblox.com/users/2874355099/profile" target="_blank" title="Roblox">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
+            <path d="M5.164 0L0 18.836 18.836 24 24 5.164 5.164 0zm9.467 14.12-4.587-1.196 1.196-4.587 4.587 1.196-1.196 4.587z"/>
+        </svg>
+    </a>
+        </div>
+    </div> 
+
+    <a href="#stats" class="scroll-hint">
+        <span>Estatísticas</span>
+        <i class="fas fa-chevron-down"></i>
+    </a>
+</div>
+<div class="stats-section" id="stats">
+    <div class="stats-container">
+        <div class="player-profile-card">
+            <div class="player-name">ythayla</div>
+            <div class="player-visuals">
+                <img src="https://mc-heads.net/avatar/ythayla/128" alt="Cabeça ythayla" class="player-skin-head">
+                <img src="source/minime.png" alt="Minime 3D ythayla" class="player-minime-img">
+            </div>
+            <div class="profile-info-divider"></div>
+            <div class="profile-info-item">Rank: <strong>Membro</strong></div>
+            <div class="profile-info-item">Último login: <strong>14/05/2026</strong></div>
+            <div class="profile-info-item">Primeiro login: <strong>08/12/2023</strong></div>
+        </div>
+        <div class="minigames-grid">
+            <div class="stat-card">
+                <div class="stat-card-header">HG</div>
+                <div class="stat-card-body">
+                    <div class="stat-row"><span>Kills</span><span class="val">0</span></div>
+                    <div class="stat-row"><span>Vitórias</span><span class="val">0</span></div>
+                    <div class="stat-row"><span>Mortes</span><span class="val">0</span></div>
+                    <div class="stat-row"><span>K/D</span><span class="val">N/A</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">PVP</div>
+                <div class="stat-card-body">
+                    <div class="stat-row"><span>Arena: Kills</span><span class="val">487</span></div>
+                    <div class="stat-row"><span>Arena: Deaths</span><span class="val">458</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">DUELS: SOPA</div>
+                <div class="stat-card-body">
+                    <div class="stat-row"><span>Vitórias</span><span class="val">3</span></div>
+                    <div class="stat-row"><span>Derrotas</span><span class="val">12</span></div>
+                    <div class="stat-row"><span>Winstreak</span><span class="val">0</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">DUELS: GLADIATOR</div>
+                <div class="stat-card-body">
+                    <div class="stat-row"><span>Vitórias</span><span class="val">60</span></div>
+                    <div class="stat-row"><span>Derrotas</span><span class="val">304</span></div>
+                    <div class="stat-row"><span>Winstreak</span><span class="val">0</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">SKY WARS</div>
+                <div class="stat-card-body">
+                    <div class="stat-row"><span>Nível</span><span class="val">2</span></div>
+                    <div class="stat-row"><span>Kills</span><span class="val">116</span></div>
+                    <div class="stat-row"><span>Vitórias</span><span class="val">127</span></div>
+                    <div class="stat-row"><span>Derrotas</span><span class="val">59</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">PARTY</div>
+                <div class="stat-card-body">
+                    <div class="stat-row"><span>1º Lugar</span><span class="val">1</span></div>
+                    <div class="stat-row"><span>2º Lugar</span><span class="val">2</span></div>
+                    <div class="stat-row"><span>3º Lugar</span><span class="val">1</span></div>
+                    <div class="stat-row"><span>Pontos</span><span class="val">48</span></div>
+                </div>
+            </div>
+            <div class="stat-card full-width">
+                <div class="stat-card-header">BED WARS</div>
+                <div class="stat-card-body">
+                    <div class="stat-row"><span>Nível</span><span class="val">46</span></div>
+                    <div class="stat-row"><span>Vitórias</span><span class="val">477</span></div>
+                    <div class="stat-row"><span>Kills</span><span class="val">2626</span></div>
+                    <div class="stat-row"><span>Kills Finais</span><span class="val">2401</span></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="social-links">
-<a href="https://pt.namemc.com/profile/ythayla" target="_blank" class="social-icon namemc-icon" title="NameMC">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
-        <path d="M0 0v24h24V0H0zm4.5 4.5h4.125l5.25 8.25V4.5h4.125v15h-4.125l-5.25-8.25v8.25H4.5V4.5z"/>
-    </svg>
-</a>
-		<a href="https://steam.com" target="_blank"><i class="fab fa-steam" title="Steam"></i></a>
-        <a href="https://spotify.com/" target="_blank"><i class="fab fa-spotify" title="Spotify"></i></a>
-        <a href="https://discord.com/" target="_blank"><i class="fab fa-discord" title="Discord"></i></a>
-        <a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube" title="YouTube"></i></a>
-    </div>
-</div> 
+</div>
 <script>
+var video = document.getElementById('bg-video');
+if (video) {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.play().catch(function(){});
+}
 function startExperience() {
     var overlay = document.getElementById('overlay');
     var content = document.getElementById('content');
     var volumeControl = document.getElementById('volume-control');
     var viewToggle = document.getElementById('view-toggle');
-    var video = document.getElementById('bg-video');
     var audio = document.getElementById('bg-audio');
     overlay.style.pointerEvents = 'none';
     overlay.style.opacity = '0';
     setTimeout(function() { 
         overlay.style.display = 'none'; 
     }, 400);
-    content.style.display = 'block';
+    content.style.display = 'flex';
     volumeControl.style.display = 'flex';
     viewToggle.style.display = 'block';
     setTimeout(function() {
         content.style.opacity = '1';
         volumeControl.style.opacity = '1';
     }, 50);
-    video.play().catch(e => console.log("Vídeo com erro ao reproduzir:", e));
-    audio.volume = 1.0; 
-    audio.play().catch(e => console.log("Áudio bloqueado pelo navegador"));
+    if (video) {
+        video.muted = true;
+        video.play().catch(function(e) { console.log("Aviso de vídeo:", e); });
+    }
+    if (audio) {
+        audio.volume = 1.0; 
+        audio.play().catch(function(e) { console.log("Áudio bloqueado:", e); });
+    }
 }
 var volumeSlider = document.getElementById('volume-slider');
 var audio = document.getElementById('bg-audio');
@@ -125,7 +206,7 @@ function atualizarIcone(valor) {
 }
 function aplicarInclinacao(e) {
     var content = document.getElementById("content");
-    if (content.style.display === 'block') {
+    if (content.style.display === 'flex') {
         var rect = content.getBoundingClientRect();
         var centroX = rect.left + rect.width / 2;
         var centroY = rect.top + rect.height / 2;
@@ -135,15 +216,15 @@ function aplicarInclinacao(e) {
         var distanciaY = clientY - centroY;
         var inclinacaoX = distanciaY / 25; 
         var inclinacaoY = -(distanciaX / 25);
-        content.style.transform = `translate(-50%, -50%) perspective(1000px) rotateX(${inclinacaoX}deg) rotateY(${inclinacaoY}deg)`;
+        content.style.transform = `perspective(1000px) rotateX(${inclinacaoX}deg) rotateY(${inclinacaoY}deg)`;
     }
 }
 document.addEventListener("mousemove", aplicarInclinacao);
 document.addEventListener("touchmove", aplicarInclinacao);
 function removerInclinacao() {
     var content = document.getElementById("content");
-    if (content.style.display === 'block') {
-        content.style.transform = `translate(-50%, -50%) perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    if (content.style.display === 'flex') {
+        content.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
     }
 }
 document.addEventListener("mouseleave", removerInclinacao);
@@ -152,16 +233,22 @@ var isUIHidden = false;
 function atualizarVisualizacao() {
     var content = document.getElementById('content');
     var volumeControl = document.getElementById('volume-control');
+    var statsSection = document.getElementById('stats');
+    var scrollHint = document.querySelector('.scroll-hint');
     var viewIcon = document.getElementById('view-icon');
     var overlay = document.getElementById('overlay');
     if (overlay.style.display !== 'none') return;
     if (isUIHidden) {
         if (content) { content.style.opacity = '0'; content.style.pointerEvents = 'none'; }
         if (volumeControl) { volumeControl.style.opacity = '0'; volumeControl.style.pointerEvents = 'none'; }
+        if (statsSection) { statsSection.style.opacity = '0'; statsSection.style.pointerEvents = 'none'; }
+        if (scrollHint) { scrollHint.style.opacity = '0'; }
         if (viewIcon) viewIcon.className = 'fas fa-eye-slash'; 
     } else {
         if (content) { content.style.opacity = '1'; content.style.pointerEvents = 'auto'; }
         if (volumeControl) { volumeControl.style.opacity = '1'; volumeControl.style.pointerEvents = 'auto'; }
+        if (statsSection) { statsSection.style.opacity = '1'; statsSection.style.pointerEvents = 'auto'; }
+        if (scrollHint) { scrollHint.style.opacity = '1'; }
         if (viewIcon) viewIcon.className = 'fas fa-eye';
     }
 }
@@ -180,58 +267,339 @@ document.addEventListener('keydown', function(e) {
 </script>
 <script>
 (function() {
-  const bunny = document.getElementById('bunny');
-  if (!bunny) return;
-  let currentX = window.innerWidth / 2;
-  let currentY = window.innerHeight / 2;
-  let mouseX = currentX;
-  let mouseY = currentY;
-  let jumpPhase = 0;
-  let facingRight = false;
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  window.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-      mouseX = e.touches[0].clientX;
-      mouseY = e.touches[0].clientY;
+    const bunny = document.getElementById('bunny');
+    if (!bunny) return;
+    let currentX = 50;
+    let currentY = window.innerHeight - 60;
+    let mouseX = currentX;
+    let mouseY = currentY;
+    let jumpPhase = 0;
+    let facingRight = false;
+    let isSwapped = false;
+    let canEat = false;
+    let hasMoved = false;
+    const bunnyCursorSVG = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">🐇</text></svg>`;
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!hasMoved) {
+            hasMoved = true;
+            canEat = true;
+        }
+    });
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+            if (!hasMoved) {
+                hasMoved = true;
+                canEat = true;
+            }
+        }
+    }, { passive: true });
+    function triggerEatEffect(x, y) {
+        for (let i = 0; i < 8; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'firework-spark';
+            spark.style.width = '4px';
+            spark.style.height = '4px';
+            document.body.appendChild(spark);
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 3 + 1;
+            let vx = Math.cos(angle) * speed;
+            let vy = Math.sin(angle) * speed;
+            let posX = x;
+            let posY = y;
+            let life = 0;
+            function anim() {
+                life++;
+                posX += vx;
+                posY += vy;
+                spark.style.left = `${posX}px`;
+                spark.style.top = `${posY}px`;
+                spark.style.opacity = `${1 - life / 20}`;
+                if (life < 20) {
+                    requestAnimationFrame(anim);
+                } else {
+                    spark.remove();
+                }
+            }
+            anim();
+        }
     }
-  }, { passive: true });
-  function animate() {
-    const dx = mouseX - currentX;
-    const dy = mouseY - currentY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    if (Math.abs(dx) > 2) {
-      facingRight = dx > 0;
+    function swapRoles() {
+        canEat = false;
+        isSwapped = !isSwapped;
+        triggerEatEffect(currentX, currentY);
+        if (isSwapped) {
+            document.body.style.cursor = `url('${bunnyCursorSVG}') 4 4, auto`;
+            bunny.textContent = '🥕';
+        } else {
+            document.body.style.cursor = 'url("source/cursor_trans.png") 16 16, auto';
+            bunny.textContent = '🐇';
+        }
+        setTimeout(() => {
+            canEat = true;
+        }, 1200);
     }
-    let jumpOffsetY = 0;
-    let squash = 1;
-    if (distance > 15) {
-      const speed = 0.3;
-      currentX += (dx / distance) * speed;
-      currentY += (dy / distance) * speed;
-      jumpPhase += 0.12;
-      const jumpHeight = 14;
-      const jumpProgress = Math.sin(jumpPhase);
-      jumpOffsetY = -Math.max(0, jumpProgress) * jumpHeight;
-      if (jumpProgress > 0) {
-        squash = 1 + jumpProgress * 0.15;
-      } else {
-        squash = 1 + jumpProgress * 0.1;
-      }
-    } else {
-      jumpOffsetY = 0;
-      squash = 1;
+    function animate() {
+        const dx = mouseX - currentX;
+        const dy = mouseY - currentY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (Math.abs(dx) > 2) {
+            facingRight = dx > 0;
+        }
+        let jumpOffsetY = 0;
+        let squash = 1;
+
+        if (distance < 14 && canEat) {
+            swapRoles();
+        }
+        if (distance > 10) {
+            const speed = 0.3;
+            currentX += (dx / distance) * speed;
+            currentY += (dy / distance) * speed;
+            jumpPhase += 0.12;
+            const jumpHeight = 12;
+            const jumpProgress = Math.sin(jumpPhase);
+            jumpOffsetY = -Math.max(0, jumpProgress) * jumpHeight;
+            if (jumpProgress > 0) {
+                squash = 1 + jumpProgress * 0.15;
+            } else {
+                squash = 1 + jumpProgress * 0.1;
+            }
+        } else {
+            jumpOffsetY = 0;
+            squash = 1;
+        }
+        const scaleX = (facingRight && !isSwapped) ? -1 : 1;
+        bunny.style.transform = `translate(${currentX - 14}px, ${currentY - 20 + jumpOffsetY}px) scaleX(${scaleX}) scaleY(${squash})`;
+        requestAnimationFrame(animate);
     }
-    const scaleX = facingRight ? -1 : 1;
-    bunny.style.transform = `translate(${currentX - 16}px, ${currentY - 24 + jumpOffsetY}px) scaleX(${scaleX}) scaleY(${squash})`;
+    animate();
+})();
+</script>
+<script>
+(function() {
+    const usernameEl = document.querySelector('.username');
+    if (!usernameEl) return;
+    function spawnMiniFirework(x, y) {
+        const particleCount = 10 + Math.floor(Math.random() * 8);
+        for (let i = 0; i < particleCount; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'firework-spark';
+            const size = Math.random() * 2.5 + 1.5;
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+            document.body.appendChild(spark);
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 2.5 + 1;
+            let vx = Math.cos(angle) * speed;
+            let vy = Math.sin(angle) * speed;
+            let posX = x;
+            let posY = y;
+            let opacity = 1;
+            let life = 0;
+            const maxLife = 35 + Math.random() * 20;
+            function animateSpark() {
+                life++;
+                posX += vx;
+                posY += vy;
+                vy += 0.04;
+                vx *= 0.96;
+                vy *= 0.96;
+                opacity = 1 - (life / maxLife);
+                spark.style.left = `${posX}px`;
+                spark.style.top = `${posY}px`;
+                spark.style.opacity = opacity;
+                spark.style.transform = `scale(${opacity})`;
+                if (life < maxLife) {
+                    requestAnimationFrame(animateSpark);
+                } else {
+                    spark.remove();
+                }
+            }
+            animateSpark();
+        }
+    }
+    function triggerRandomBurst() {
+        if (window.getComputedStyle(usernameEl).opacity === "0") {
+            setTimeout(triggerRandomBurst, 30);
+            return;
+        }
+        const rect = usernameEl.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+            const burstX = rect.left + Math.random() * rect.width;
+            const burstY = rect.top + Math.random() * rect.height;
+            spawnMiniFirework(burstX, burstY);
+        }
+        const nextBurst = Math.random() * 600 + 400;
+        setTimeout(triggerRandomBurst, nextBurst);
+    }
+    triggerRandomBurst();
+})();
+</script>
+<script>
+(function() {
+    const dots = document.querySelectorAll('.scroll-dot');
+    if (!dots.length) return;
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const target = document.querySelector(dot.dataset.target);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+    const sections = document.querySelectorAll('.hero-section, #stats');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const selector = entry.target.id ? `#${entry.target.id}` : `.${entry.target.classList[0]}`;
+                dots.forEach(dot => {
+                    dot.classList.toggle('active', dot.dataset.target === selector);
+                });
+            }
+        });
+    }, { threshold: 0.5 });
+    sections.forEach(section => observer.observe(section));
+})();
+</script>
+<script>
+(function() {
+    const usernameEl = document.querySelector('.username');
+    if (!usernameEl) return;
+    let burstTimeout = null;
+    function clearAllSparks() {
+        document.querySelectorAll('.firework-spark').forEach(spark => spark.remove());
+    }
+    function spawnMiniFirework(x, y) {
+        if (document.hidden) return;
+        const particleCount = 10 + Math.floor(Math.random() * 8);
+        for (let i = 0; i < particleCount; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'firework-spark';
+            const size = Math.random() * 2.5 + 1.5;
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+            document.body.appendChild(spark);
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 2.5 + 1;
+            let vx = Math.cos(angle) * speed;
+            let vy = Math.sin(angle) * speed;
+            let posX = x;
+            let posY = y;
+            let life = 0;
+            const maxLife = 35 + Math.random() * 20;
+            function animateSpark() {
+                if (document.hidden) {
+                    spark.remove();
+                    return;
+                }
+                life++;
+                posX += vx;
+                posY += vy;
+                vy += 0.04;
+                vx *= 0.96;
+                vy *= 0.96;
+                opacity = 1 - (life / maxLife);
+                spark.style.left = `${posX}px`;
+                spark.style.top = `${posY}px`;
+                spark.style.opacity = opacity;
+                spark.style.transform = `scale(${opacity})`;
 
-    requestAnimationFrame(animate);
-  }
+                if (life < maxLife) {
+                    requestAnimationFrame(animateSpark);
+                } else {
+                    spark.remove();
+                }
+            }
+            requestAnimationFrame(animateSpark);
+        }
+    }
+    function triggerRandomBurst() {
+        if (document.hidden || window.getComputedStyle(usernameEl).opacity === "0") {
+            burstTimeout = setTimeout(triggerRandomBurst, 500);
+            return;
+        }
+        const rect = usernameEl.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+            const burstX = rect.left + Math.random() * rect.width;
+            const burstY = rect.top + Math.random() * rect.height;
+            spawnMiniFirework(burstX, burstY);
+        }
+        const nextBurst = Math.random() * 600 + 400;
+        burstTimeout = setTimeout(triggerRandomBurst, nextBurst);
+    }
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            clearTimeout(burstTimeout);
+            clearAllSparks();
+        } else {
+            clearTimeout(burstTimeout);
+            triggerRandomBurst();
+        }
+    });
 
-  animate();
+    triggerRandomBurst();
+})();
+</script>
+<script>
+(function() {
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    const isSmallScreen = window.innerWidth <= 768;
+    function adjustMobileViewport() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        const hero = document.querySelector('.hero-section');
+        if (hero) hero.style.minHeight = `${window.innerHeight}px`;
+    }
+    adjustMobileViewport();
+    window.addEventListener('resize', adjustMobileViewport, { passive: true });
+    window.addEventListener('orientationchange', () => {
+        setTimeout(adjustMobileViewport, 150);
+    });
+    const content = document.getElementById('content');
+    if (isTouchDevice && content) {
+        document.removeEventListener('touchmove', window.aplicarInclinacao);
+        document.removeEventListener('touchend', window.removerInclinacao);
+        content.style.transform = 'none';
+        content.addEventListener('touchstart', function() {
+            content.style.transform = 'scale(0.98)';
+        }, { passive: true });
+        content.addEventListener('touchend', function() {
+            content.style.transform = 'none';
+        }, { passive: true });
+    }
+    const video = document.getElementById('bg-video');
+    if (video) {
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && video.paused) {
+                video.play().catch(() => {});
+            }
+        });
+        window.addEventListener('focus', function() {
+            if (video.paused) video.play().catch(() => {});
+        });
+    }
+    const scrollDots = document.getElementById('scroll-dots');
+    if (scrollDots && isSmallScreen) {
+        scrollDots.style.right = '10px';
+        scrollDots.style.gap = '10px';
+    }
+    const volumeControl = document.getElementById('volume-control');
+    const qualityToggle = document.getElementById('quality-toggle');
+    if (isSmallScreen) {
+        if (volumeControl) {
+            volumeControl.style.top = '12px';
+            volumeControl.style.left = '12px';
+            volumeControl.style.padding = '8px 12px';
+        }
+        if (qualityToggle) {
+            qualityToggle.style.bottom = '12px';
+            qualityToggle.style.left = '12px';
+        }
+    }
 })();
 </script>
 </body>
