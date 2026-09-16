@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://mc-heads.net; media-src 'self' https://res.cloudinary.com https://*.cloudinary.com blob: data:; connect-src 'self' https://res.cloudinary.com https://*.cloudinary.com; object-src 'none'; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://mc-heads.net; media-src 'self' https://res.cloudinary.com blob: data:; connect-src 'self' https://res.cloudinary.com; object-src 'none'; base-uri 'self';">
 <title>yThay</title>
 <meta name="theme-color" content="#ff4d4d">
 <link rel="icon" type="image/png" href="source/superminime.png">
@@ -17,7 +17,7 @@
     <div class="scroll-dot" data-target="#stats" title="Estatísticas"></div>
 </div>
 <video id="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
-    <source src="https://res.cloudinary.com/gf3crhhf/video/upload/SO_BITTER_ANIMATION_MEME_-_cereal_1080p_h264_youtube_1.mp4?_s=vp-3.7.2" type="video/mp4">
+    <source src="https://res.cloudinary.com/gf3crhhf/video/upload/SO_BITTER_ANIMATION_MEME_-_cereal_1080p_h264_youtube_1.mp4" type="video/mp4">
 </video>
 <div class="bg-dim"></div>
 <div id="bunny">🐇</div>
@@ -462,7 +462,7 @@ document.addEventListener('keydown', function(e) {
             }
         });
     }, { threshold: 0.5 });
-    sections.forEach(section => observer.observe(section));
+    sections.forEach(observer.observe(section));
 })();
 </script>
 <script>
