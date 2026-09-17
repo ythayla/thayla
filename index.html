@@ -75,15 +75,11 @@ function startExperience() {
         overlay.style.display = 'none'; 
     }, 400);
     content.style.display = 'flex';
-    volumeControl.style.display = 'flex';
-    viewToggle.style.display = 'block';
     setTimeout(function() {
         content.style.opacity = '1';
-        volumeControl.style.opacity = '1';
-        volumeControl.style.visibility = 'visible';
-        viewToggle.style.opacity = '1';
-        viewToggle.style.visibility = 'visible';
     }, 50);
+    volumeControl.classList.add('ativo');
+    viewToggle.classList.add('ativo');
     if (video) {
         video.muted = false;
         video.volume = 1.0;
@@ -156,13 +152,13 @@ function atualizarVisualizacao() {
     if (overlay && overlay.style.display !== 'none') return;
     if (isUIHidden) {
         if (content) { content.style.opacity = '0'; content.style.pointerEvents = 'none'; }
-        if (volumeControl) { volumeControl.style.opacity = '0'; volumeControl.style.pointerEvents = 'none'; }
-        if (viewToggle) viewToggle.style.opacity = '1';
+        if (volumeControl) { volumeControl.classList.remove('ativo'); }
+        if (viewToggle) viewToggle.classList.add('ativo');
         if (viewIcon) viewIcon.className = 'fas fa-eye-slash'; 
     } else {
         if (content) { content.style.opacity = '1'; content.style.pointerEvents = 'auto'; }
-        if (volumeControl) { volumeControl.style.opacity = '1'; volumeControl.style.pointerEvents = 'auto'; }
-        if (viewToggle) viewToggle.style.opacity = '1';
+        if (volumeControl) { volumeControl.classList.add('ativo'); }
+        if (viewToggle) viewToggle.classList.add('ativo');
         if (viewIcon) viewIcon.className = 'fas fa-eye';
     }
 }
