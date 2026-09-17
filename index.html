@@ -90,22 +90,23 @@ var volumeSlider = document.getElementById('volume-slider');
 var volumeIcon = document.getElementById('volume-icon');
 var ultimoVolume = 1.0;
 volumeSlider.addEventListener('input', function() {
-    if (video) {
-        video.muted = false;
-        video.volume = parseFloat(this.value);
-    }
-    if (this.value > 0) ultimoVolume = parseFloat(this.value);
-    atualizarIcone(parseFloat(this.value));
+    if (!video) return;
+    var novoVolume = parseFloat(this.value);
+    video.muted = false;
+    video.volume = novoVolume;
+    if (novoVolume > 0) ultimoVolume = novoVolume;
+    atualizarIcone(novoVolume);
 });
 volumeIcon.addEventListener('click', function() {
     if (!video) return;
-    if (!video.muted && video.volume > 0) {
-        video.muted = true;
+    if (video.volume > 0) {
+        ultimoVolume = video.volume;
+        video.volume = 0;
         volumeSlider.value = 0;
         atualizarIcone(0);
     } else {
-        video.muted = false;
         var volumeParaVoltar = ultimoVolume > 0 ? ultimoVolume : 1.0;
+        video.muted = false;
         video.volume = volumeParaVoltar;
         volumeSlider.value = volumeParaVoltar;
         atualizarIcone(volumeParaVoltar);
