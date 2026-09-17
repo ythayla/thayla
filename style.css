@@ -363,7 +363,7 @@ body, html {
     visibility: visible;
     opacity: 0.8;
 }
-#view-toggle:hover {
+#view-toggle.ativo:hover {
     transform: scale(1.1);
     opacity: 1;
 }
@@ -396,6 +396,7 @@ body, html {
     font-size: 1.2rem;
     width: 20px;
     text-align: center;
+    cursor: pointer;
 }
 #volume-slider {
     -webkit-appearance: none;
@@ -409,8 +410,14 @@ body, html {
     outline: none;
     transition: width 0.4s ease, opacity 0.4s ease;
 }
-#volume-control:hover { gap: 15px; }
-#volume-control:hover #volume-slider { width: 80px; opacity: 1; pointer-events: auto; }
+#volume-control.ativo:hover {
+    gap: 15px;
+}
+#volume-control.ativo:hover #volume-slider {
+    width: 80px;
+    opacity: 1;
+    pointer-events: auto;
+}
 #volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
