@@ -17,6 +17,7 @@
 </video>
 <div class="bg-dim"></div>
 <div id="bunny">🐇</div>
+<div id="cursor-glow"></div>
 <div id="overlay" onclick="startExperience()">
     <div class="click-text"> 🏳️‍⚧️ </div>
 </div>
@@ -492,6 +493,95 @@ document.addEventListener('keydown', function(e) {
     }
     window.addEventListener('mousemove', ativarBlur, { passive: true });
     window.addEventListener('touchmove', ativarBlur, { passive: true });
+})();
+</script>
+<script>
+(function() {
+    const video = document.getElementById('bg-video');
+    const volumeSlider = document.getElementById('volume-slider');
+    if (!video || !volumeSlider) return;
+
+    function reaplicarVolume() {
+        if (video.muted) return;
+        var vol = parseFloat(volumeSlider.value);
+        if (isNaN(vol)) vol = 1.0;
+        if (Math.abs(video.volume - vol) > 0.01) {
+            video.volume = vol;
+        }
+    }
+
+    video.addEventListener('seeked', reaplicarVolume);
+    video.addEventListener('play', reaplicarVolume);
+    video.addEventListener('playing', reaplicarVolume);
+
+    video.addEventListener('timeupdate', function() {
+        if (video.currentTime < 0.5) {
+            reaplicarVolume();
+        }
+    });
+
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            reaplicarVolume();
+            if (video.paused) {
+                video.play().catch(function(){});
+            }
+        }
+    });
+
+    window.addEventListener('focus', function() {
+        reaplicarVolume();
+        if (video.paused) {
+            video.play().catch(function(){});
+        }
+    });
+})();
+</script>
+<script>
+(function() {
+    var glow = document.getElementById('cursor-glow');
+    if (!glow) return;
+    var mouseX = -100, mouseY = -100;
+    var glowX = -100, glowY = -100;
+    var ativo = false;
+    var pararTimeout = null;
+
+    window.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!ativo) {
+            glow.classList.add('active');
+            ativo = true;
+        }
+        clearTimeout(pararTimeout);
+        pararTimeout = setTimeout(function() {
+            glow.classList.remove('active');
+            ativo = false;
+        }, 300);
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function(e) {
+        if (e.touches.length > 0) {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+            glow.classList.add('active');
+            ativo = true;
+            clearTimeout(pararTimeout);
+            pararTimeout = setTimeout(function() {
+                glow.classList.remove('active');
+                ativo = false;
+            }, 300);
+        }
+    }, { passive: true });
+
+    function animar() {
+        glowX += (mouseX - glowX) * 0.15;
+        glowY += (mouseY - glowY) * 0.15;
+        glow.style.left = glowX + 'px';
+        glow.style.top = glowY + 'px';
+        requestAnimationFrame(animar);
+    }
+    animar();
 })();
 </script>
 </body>
