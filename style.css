@@ -291,3 +291,16 @@ body, html {
     color: #a0a0b0;
     margin-bottom: 8px;
 }
+.profile-info-item strong {
+    color: #ffffff;
+}
+
+.minigames-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+.stat-card {
+    background: rgba(18, 19, 24, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border
