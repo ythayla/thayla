@@ -80,7 +80,9 @@ function startExperience() {
     setTimeout(function() {
         content.style.opacity = '1';
         volumeControl.style.opacity = '1';
+        volumeControl.style.visibility = 'visible';
         viewToggle.style.opacity = '1';
+        viewToggle.style.visibility = 'visible';
     }, 50);
     if (video) {
         video.muted = false;
