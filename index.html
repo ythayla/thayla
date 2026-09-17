@@ -478,5 +478,21 @@ document.addEventListener('keydown', function(e) {
     }
 })();
 </script>
+<script>
+(function() {
+    const video = document.getElementById('bg-video');
+    if (!video) return;
+    let blurTimeout = null;
+    function ativarBlur() {
+        video.classList.add('blur');
+        clearTimeout(blurTimeout);
+        blurTimeout = setTimeout(function() {
+            video.classList.remove('blur');
+        }, 250);
+    }
+    window.addEventListener('mousemove', ativarBlur, { passive: true });
+    window.addEventListener('touchmove', ativarBlur, { passive: true });
+})();
+</script>
 </body>
 </html>
