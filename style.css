@@ -521,3 +521,11 @@ body, html {
     .hero-minime-side { display: none; }
     #scroll-dots { right: 10px; gap: 10px; }
 }
+
+/* === EFEITO DE BLUR NO FUNDO QUANDO MEXE O MOUSE === */
+#bg-video {
+    transition: filter 0.4s ease;
+}
+#bg-video.blur {
+    filter: blur(4px);
+}
