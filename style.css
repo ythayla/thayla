@@ -522,10 +522,31 @@ body, html {
     #scroll-dots { right: 10px; gap: 10px; }
 }
 
-/* === EFEITO DE BLUR NO FUNDO QUANDO MEXE O MOUSE === */
+/* === BLUR NO FUNDO QUANDO MEXE O MOUSE === */
 #bg-video {
     transition: filter 0.4s ease;
 }
 #bg-video.blur {
     filter: blur(4px);
+}
+
+/* === CURSOR COM RASTRO BORRADO === */
+#cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 123, 247, 0.6) 0%, rgba(240, 123, 247, 0) 70%);
+    pointer-events: none;
+    z-index: 999999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    will-change: transform, opacity;
+    mix-blend-mode: screen;
+}
+#cursor-glow.active {
+    opacity: 1;
 }
