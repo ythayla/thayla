@@ -307,11 +307,4 @@ body, html {
     overflow: hidden;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-    transition: transform 0.2s ease, border-color 0.2s ease;
-}
-.stat-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(240, 123, 247, 0.5);
-}
-.stat-card.full-width {
-    grid
+    transition: transform 0
