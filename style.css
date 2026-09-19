@@ -14,7 +14,6 @@ html, body {
     cursor: url("source/cursor_trans.png") 16 16, auto;
 }
 
-/* ============ FUNDO ============ */
 body::before {
     content: "";
     position: fixed;
@@ -40,7 +39,6 @@ a { color: inherit; text-decoration: none; }
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
-/* ============ OVERLAY ============ */
 #overlay {
     position: fixed;
     inset: 0;
@@ -59,7 +57,6 @@ a { color: inherit; text-decoration: none; }
     text-transform: lowercase;
 }
 
-/* ============ CONTAINER ============ */
 .page-wrap {
     min-height: 100vh;
     display: flex;
@@ -78,7 +75,6 @@ a { color: inherit; text-decoration: none; }
     transition: opacity 0.5s ease;
 }
 
-/* ============ PERFIL ============ */
 .profile {
     display: flex;
     align-items: center;
@@ -121,7 +117,6 @@ a { color: inherit; text-decoration: none; }
 .dot.dnd     { background: #a85252; }
 .dot.offline { background: #555; }
 
-/* ============ ABAS ============ */
 .tabs {
     display: flex;
     gap: 0;
@@ -150,7 +145,6 @@ a { color: inherit; text-decoration: none; }
     background: #c9a86a;
 }
 
-/* ============ SEÇÕES ============ */
 .content-section {
     display: none;
     background: rgba(20, 20, 24, 0.72);
@@ -175,7 +169,6 @@ a { color: inherit; text-decoration: none; }
 .content-section p.muted { color: #8a8a8a; font-size: 0.85rem; }
 .content-section strong { color: #c9a86a; font-weight: 600; }
 
-/* ============ AMIGUES ============ */
 .friend-list { list-style: none; margin-top: 14px; }
 .friend-list li + li { margin-top: 2px; }
 .friend-list a {
@@ -203,7 +196,6 @@ a { color: inherit; text-decoration: none; }
     color: #777;
 }
 
-/* ============ LINKS ============ */
 .link-list { list-style: none; margin-top: 14px; }
 .link-list li + li { margin-top: 2px; }
 .link-list a {
@@ -233,7 +225,6 @@ a { color: inherit; text-decoration: none; }
     color: #777;
 }
 
-/* ============ MINECRAFT ============ */
 .mc-block {
     margin-top: 20px;
     padding-top: 18px;
@@ -276,7 +267,6 @@ a { color: inherit; text-decoration: none; }
     color: #c9a86a;
 }
 
-/* ============ RODAPÉ ============ */
 .site-footer {
     display: flex;
     justify-content: center;
@@ -303,7 +293,6 @@ a { color: inherit; text-decoration: none; }
     border-color: rgba(201, 168, 106, 0.3);
 }
 
-/* ============ TOGGLE ============ */
 #view-toggle {
     position: fixed;
     top: 18px;
@@ -319,7 +308,6 @@ a { color: inherit; text-decoration: none; }
 #view-toggle.active { visibility: visible; opacity: 1; }
 #view-toggle:hover { color: #c9a86a; }
 
-/* ============ TOAST ============ */
 #toast {
     position: fixed;
     bottom: 24px;
@@ -339,7 +327,6 @@ a { color: inherit; text-decoration: none; }
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* ============ WIDGET DE VIEWS ============ */
 .widget-views {
     position: fixed;
     bottom: 20px;
@@ -408,7 +395,6 @@ a { color: inherit; text-decoration: none; }
     to   { transform: translateY(-3px); }
 }
 
-/* ============ WIDGET SPOTIFY ============ */
 .widget-spotify {
     position: fixed;
     bottom: 20px;
@@ -465,7 +451,6 @@ a { color: inherit; text-decoration: none; }
     text-overflow: ellipsis;
 }
 
-/* ============ MOBILE ============ */
 @media (max-width: 560px) {
     .page-wrap { padding: 30px 16px 200px; }
     .tabs { overflow-x: auto; }
