@@ -1,156 +1,482 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co; media-src 'self' blob: data:; connect-src 'self' https://api.lanyard.rest https://*.lanyard.rest; object-src 'none'; base-uri 'self';">
-<title>ythay</title>
-<meta name="theme-color" content="#1a1a1a">
-<link rel="icon" type="image/png" href="source/superminime.png">
-<link rel="apple-touch-icon" href="source/superminime.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-<div id="overlay" onclick="startExperience()">
-    <div class="click-text">entrar</div>
-</div>
+html, body {
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #ddd;
+    background: #0f0f12;
+    cursor: url("source/cursor_trans.png") 16 16, auto;
+}
 
-<div id="view-toggle" title="esconder interface">
-    <i class="fas fa-eye" id="view-icon"></i>
-</div>
+/* ============ FUNDO ============ */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -40px;
+    background: url("source/fundo.gif") center/cover no-repeat;
+    filter: blur(4px) saturate(0.9) brightness(0.6);
+    transform: scale(1.1);
+    z-index: -2;
+}
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(12, 12, 16, 0.35);
+    z-index: -1;
+    pointer-events: none;
+}
 
-<main class="page-wrap">
-    <div id="content">
+a, button { cursor: url("source/cursor_trans.png") 16 16, pointer; }
+a { color: inherit; text-decoration: none; }
 
-        <header class="profile">
-            <img src="source/avatar.png" alt="avatar" class="avatar">
-            <div class="profile-info">
-                <h1 class="username">ythay</h1>
-                <div class="handle">
-                    <span class="dot" id="status-dot"></span>
-                    <span id="status-text">carregando...</span>
-                </div>
-            </div>
-        </header>
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
 
-        <nav class="tabs">
-            <button class="tab active" data-page="about">sobre</button>
-            <button class="tab" data-page="friends">amigos</button>
-            <button class="tab" data-page="contact">contato</button>
-            <button class="tab" data-page="extra">+</button>
-        </nav>
+/* ============ OVERLAY ============ */
+#overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 12, 0.96);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+.click-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #888;
+    letter-spacing: 4px;
+    text-transform: lowercase;
+}
 
-        <section id="about" class="content-section active">
-            <p>oi! eu sou a <strong>thay</strong>.</p>
-            <p class="muted">esse é meu cantinho na internet. um lugar pequeno onde eu guardo as coisas que eu gosto.</p>
-        </section>
+/* ============ CONTAINER ============ */
+.page-wrap {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px 200px;
+    position: relative;
+    z-index: 1;
+}
 
-<section id="friends" class="content-section">
-    <p class="muted">pessoas que fazem meu dia melhor.</p>
-    <ul class="friend-list">
-        <li>
-            <a href="https://discord.com/users/1431635702579200004" target="_blank">
-                <img class="friend-avatar" src="" alt="emily" data-discord-id="1431635702579200004" data-fallback="E">
-                <span class="friend-name">emily</span>
-                <span class="friend-user">discord</span>
-            </a>
-        </li>
-        <li>
-            <a href="https://discord.com/users/732388924629975061" target="_blank">
-                <img class="friend-avatar" src="" alt="biel" data-discord-id="732388924629975061" data-fallback="B">
-                <span class="friend-name">biel</span>
-                <span class="friend-user">discord</span>
-            </a>
-        </li>
-        <li>
-            <a href="https://discord.com/users/1285208151297359903" target="_blank">
-                <img class="friend-avatar" src="" alt="neguinho" data-discord-id="1285208151297359903" data-fallback="N">
-                <span class="friend-name">neguinho</span>
-                <span class="friend-user">discord</span>
-            </a>
-        </li>
-    </ul>
-</section>
+#content {
+    display: none;
+    width: 100%;
+    max-width: 520px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
 
-        <section id="contact" class="content-section">
-            <p class="muted">onde me achar.</p>
+/* ============ PERFIL ============ */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #1a1a1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.profile-info { flex: 1; }
+.username {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #eee;
+    margin-bottom: 2px;
+    letter-spacing: -0.3px;
+}
+.handle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #888;
+}
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #555;
+    transition: background 0.3s;
+}
+.dot.online  { background: #6a9e6b; }
+.dot.idle    { background: #b8883d; }
+.dot.dnd     { background: #a85252; }
+.dot.offline { background: #555; }
 
-            <ul class="link-list">
-                <li>
-                    <a href="http://discordapp.com/users/947175002007015484" target="_blank">
-                        <i class="fab fa-discord"></i>
-                        <span class="link-label">discord</span>
-                        <span class="link-value">@ythay</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank">
-                        <i class="fab fa-spotify"></i>
-                        <span class="link-label">spotify</span>
-                        <span class="link-value">perfil</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://steamcommunity.com/profiles/76561199241246447" target="_blank">
-                        <i class="fab fa-steam"></i>
-                        <span class="link-label">steam</span>
-                        <span class="link-value">perfil</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://pt.namemc.com/profile/ythayla" target="_blank">
-                        <i class="fas fa-cube"></i>
-                        <span class="link-label">namemc</span>
-                        <span class="link-value">ythayla</span>
-                    </a>
-                </li>
-            </ul>
+/* ============ ABAS ============ */
+.tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.tab {
+    background: none;
+    border: 0;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    color: #888;
+    transition: color 0.2s;
+    position: relative;
+}
+.tab:hover { color: #bbb; }
+.tab.active { color: #e8e8e8; }
+.tab.active::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: -1px;
+    height: 1px;
+    background: #c9a86a;
+}
 
-            <div class="mc-block">
-                <p class="mc-label">minecraft</p>
-                <div class="mc-row">
-                    <span class="mc-nick">ythayla</span>
-                    <button onclick="copyName('ythayla')">copiar</button>
-                </div>
-            </div>
-        </section>
+/* ============ SEÇÕES ============ */
+.content-section {
+    display: none;
+    background: rgba(20, 20, 24, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+.content-section.active { display: block; animation: fade 0.3s ease; }
+@keyframes fade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.content-section p {
+    font-size: 0.9rem;
+    color: #c8c8c8;
+    margin-bottom: 10px;
+}
+.content-section p:last-child { margin-bottom: 0; }
+.content-section p.muted { color: #8a8a8a; font-size: 0.85rem; }
+.content-section strong { color: #c9a86a; font-weight: 600; }
 
-        <section id="extra" class="content-section">
-            <p>mais um pouco sobre mim.</p>
+/* ============ AMIGUES ============ */
+.friend-list { list-style: none; margin-top: 14px; }
+.friend-list li + li { margin-top: 2px; }
+.friend-list a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+.friend-list a:hover { background: rgba(255, 255, 255, 0.04); }
+.friend-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.friend-name { font-size: 0.88rem; color: #ddd; flex: 1; }
+.friend-user {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #777;
+}
 
-<p class="muted">
-        eu passo a maior parte do tempo ouvindo música. meu gosto é bem misturado —
-        vai de jorge ben, tim maia, tribalistas e rita lee até algumas coisas mais
-        aleatórias. também gosto de uns pagodes antigos e umas coisas novas.
-</p>
-        </section>
+/* ============ LINKS ============ */
+.link-list { list-style: none; margin-top: 14px; }
+.link-list li + li { margin-top: 2px; }
+.link-list a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+.link-list a:hover { background: rgba(255, 255, 255, 0.04); }
+.link-list i {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #999;
+    display: grid;
+    place-items: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.link-label { font-size: 0.88rem; color: #ddd; flex: 1; }
+.link-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #777;
+}
 
-        <div class="now-playing" id="now-playing" style="display:none;">
-            <div class="np-cover" id="np-cover"></div>
-            <div class="np-info">
-                <strong id="np-song"></strong>
-                <span id="np-artist"></span>
-            </div>
-        </div>
+/* ============ MINECRAFT ============ */
+.mc-block {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.mc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+.mc-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+}
+.mc-nick {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: #ddd;
+    flex: 1;
+}
+.mc-row button {
+    border: 0;
+    background: rgba(255, 255, 255, 0.05);
+    color: #bbb;
+    font-family: inherit;
+    font-size: 0.72rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+.mc-row button:hover {
+    background: rgba(201, 168, 106, 0.2);
+    color: #c9a86a;
+}
 
-        <footer class="site-footer">
-            <a href="https://pt.namemc.com/profile/ythayla" target="_blank" title="namemc"><i class="fas fa-cube"></i></a>
-            <a href="https://steamcommunity.com/profiles/76561199241246447" target="_blank" title="steam"><i class="fab fa-steam"></i></a>
-            <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank" title="spotify"><i class="fab fa-spotify"></i></a>
-            <a href="http://discordapp.com/users/947175002007015484" target="_blank" title="discord"><i class="fab fa-discord"></i></a>
-            <a href="https://www.roblox.com/users/2874355099/profile" target="_blank" title="roblox"><i class="fas fa-gamepad"></i></a>
-        </footer>
+/* ============ RODAPÉ ============ */
+.site-footer {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+.site-footer a {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    color: #777;
+    font-size: 0.95rem;
+    background: rgba(20, 20, 24, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.15s;
+}
+.site-footer a:hover {
+    color: #c9a86a;
+    border-color: rgba(201, 168, 106, 0.3);
+}
 
-    </div>
-</main>
+/* ============ TOGGLE ============ */
+#view-toggle {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    color: #777;
+    font-size: 16px;
+    z-index: 9000;
+    padding: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+}
+#view-toggle.active { visibility: visible; opacity: 1; }
+#view-toggle:hover { color: #c9a86a; }
 
-<div id="toast">copiado</div>
+/* ============ TOAST ============ */
+#toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    padding: 8px 16px;
+    background: rgba(30, 30, 34, 0.95);
+    color: #ddd;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s;
+    z-index: 10000;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-<script src="script.js"></script>
-</body>
-</html>
+/* ============ WIDGET DE VIEWS ============ */
+.widget-views {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(20, 20, 24, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(201, 168, 106, 0.25);
+    border-radius: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.widget-views.active { visibility: visible; opacity: 1; }
+
+.wv-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+.wv-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.wv-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #c9a86a;
+}
+.wv-chibis {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 48px;
+}
+.wv-chibis img {
+    width: 30px;
+    height: auto;
+    image-rendering: pixelated;
+    display: block;
+    animation: chibiBob 0.7s ease-in-out infinite alternate;
+}
+.wv-chibis img:nth-child(1) { animation-delay: 0s; }
+.wv-chibis img:nth-child(2) { animation-delay: 0.08s; }
+.wv-chibis img:nth-child(3) { animation-delay: 0.16s; }
+.wv-chibis img:nth-child(4) { animation-delay: 0.24s; }
+.wv-chibis img:nth-child(5) { animation-delay: 0.32s; }
+.wv-chibis img:nth-child(6) { animation-delay: 0.40s; }
+.wv-chibis img:nth-child(7) { animation-delay: 0.48s; }
+.wv-chibis img:nth-child(8) { animation-delay: 0.56s; }
+.wv-chibis img:nth-child(9) { animation-delay: 0.64s; }
+
+@keyframes chibiBob {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-3px); }
+}
+
+/* ============ WIDGET SPOTIFY ============ */
+.widget-spotify {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(20, 20, 24, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(201, 168, 106, 0.25);
+    border-radius: 14px;
+    padding: 10px 14px 10px 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 300px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.widget-spotify.active { visibility: visible; opacity: 1; }
+
+.ws-cover {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05) center/cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(201, 168, 106, 0.2);
+    animation: spinCover 8s linear infinite;
+}
+@keyframes spinCover {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+.ws-info { min-width: 0; flex: 1; }
+.ws-info strong {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #ddd;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ws-info span {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #888;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============ MOBILE ============ */
+@media (max-width: 560px) {
+    .page-wrap { padding: 30px 16px 200px; }
+    .tabs { overflow-x: auto; }
+    .tab { padding: 10px 10px; font-size: 0.78rem; }
+    .username { font-size: 1.15rem; }
+    .content-section { padding: 16px 18px; }
+
+    .widget-views { bottom: 12px; right: 12px; padding: 8px 10px; }
+    .wv-chibis { height: 38px; }
+    .wv-chibis img { width: 24px; }
+
+    .widget-spotify { bottom: 12px; left: 12px; right: auto; max-width: 200px; }
+    .ws-cover { width: 34px; height: 34px; }
+}
