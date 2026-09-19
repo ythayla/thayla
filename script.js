@@ -78,7 +78,7 @@ function copyName(text) {
     setTimeout(function() { toast.classList.remove('show'); }, 1600);
 }
 
-/* ============ LANYARD ============ */
+/* ============ LANYARD — STATUS + SPOTIFY ============ */
 (function() {
     var DISCORD_ID = '947175002007015484';
     var dot = document.getElementById('status-dot');
@@ -122,4 +122,37 @@ function copyName(text) {
     }
     update();
     setInterval(update, 15000);
+})();
+
+/* ============ AVATARES DOS AMIGUES (LANYARD) ============ */
+(function() {
+    var avatars = document.querySelectorAll('.friend-avatar[data-discord-id]');
+    if (!avatars.length) return;
+
+    avatars.forEach(function(img) {
+        var id = img.getAttribute('data-discord-id');
+        var fallback = img.getAttribute('data-fallback') || '?';
+
+        // primeiro coloca o fallback (letra dentro de um círculo)
+        img.alt = fallback;
+        img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36">' +
+            '<rect width="36" height="36" fill="rgba(255,255,255,0.05)" rx="18"/>' +
+            '<text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" ' +
+            'fill="#aaa" font-family="Inter, sans-serif" font-size="14" font-weight="600">' +
+            fallback + '</text></svg>'
+        );
+
+        // tenta pegar o avatar real via Lanyard
+        fetch('https://api.lanyard.rest/v1/users/' + id)
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (!res.success) return;
+                var u = res.data.discord_user;
+                if (!u || !u.avatar) return;
+                var ext = u.avatar.startsWith('a_') ? 'gif' : 'png';
+                img.src = 'https://cdn.discordapp.com/avatars/' + u.id + '/' + u.avatar + '.' + ext + '?size=128';
+            })
+            .catch(function() { /* mantém fallback */ });
+    });
 })();
