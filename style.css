@@ -19,7 +19,7 @@ body::before {
     content: "";
     position: fixed;
     inset: -40px;
-    background: url("source/fundo.jpg") center/cover no-repeat;
+    background: url("source/fundo.gif") center/cover no-repeat;
     filter: blur(14px) saturate(0.85) brightness(0.55);
     transform: scale(1.1);
     z-index: -2;
