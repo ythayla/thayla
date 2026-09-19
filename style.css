@@ -14,7 +14,7 @@ html, body {
     cursor: url("source/cursor_trans.png") 16 16, auto;
 }
 
-/* ============ FUNDO COM PAISAGEM + BLUR ============ */
+/* ============ FUNDO ============ */
 body::before {
     content: "";
     position: fixed;
@@ -65,7 +65,7 @@ a { color: inherit; text-decoration: none; }
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 60px 20px;
+    padding: 60px 20px 200px;
     position: relative;
     z-index: 1;
 }
@@ -166,7 +166,6 @@ a { color: inherit; text-decoration: none; }
     from { opacity: 0; transform: translateY(4px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-
 .content-section p {
     font-size: 0.9rem;
     color: #c8c8c8;
@@ -177,10 +176,7 @@ a { color: inherit; text-decoration: none; }
 .content-section strong { color: #c9a86a; font-weight: 600; }
 
 /* ============ AMIGUES ============ */
-.friend-list {
-    list-style: none;
-    margin-top: 14px;
-}
+.friend-list { list-style: none; margin-top: 14px; }
 .friend-list li + li { margin-top: 2px; }
 .friend-list a {
     display: flex;
@@ -208,10 +204,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============ LINKS ============ */
-.link-list {
-    list-style: none;
-    margin-top: 14px;
-}
+.link-list { list-style: none; margin-top: 14px; }
 .link-list li + li { margin-top: 2px; }
 .link-list a {
     display: flex;
@@ -283,53 +276,13 @@ a { color: inherit; text-decoration: none; }
     color: #c9a86a;
 }
 
-/* ============ SPOTIFY ============ */
-.now-playing {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 16px;
-    padding: 12px;
-    border-radius: 12px;
-    background: rgba(20, 20, 24, 0.72);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.np-cover {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.05) center/cover;
-    flex-shrink: 0;
-}
-.np-info { flex: 1; min-width: 0; }
-.np-info strong {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #ddd;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.np-info span {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: #888;
-    margin-top: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 /* ============ RODAPÉ ============ */
 .site-footer {
     display: flex;
     justify-content: center;
     gap: 8px;
     margin-top: 24px;
+    flex-wrap: wrap;
 }
 .site-footer a {
     width: 34px;
@@ -363,10 +316,7 @@ a { color: inherit; text-decoration: none; }
     opacity: 0;
     transition: all 0.3s;
 }
-#view-toggle.active {
-    visibility: visible;
-    opacity: 1;
-}
+#view-toggle.active { visibility: visible; opacity: 1; }
 #view-toggle:hover { color: #c9a86a; }
 
 /* ============ TOAST ============ */
@@ -387,16 +337,146 @@ a { color: inherit; text-decoration: none; }
     transition: all 0.25s;
     z-index: 10000;
 }
-#toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============ WIDGET DE VIEWS ============ */
+.widget-views {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(20, 20, 24, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(201, 168, 106, 0.25);
+    border-radius: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.widget-views.active { visibility: visible; opacity: 1; }
+
+.wv-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+.wv-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.wv-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #c9a86a;
+}
+.wv-chibis {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 48px;
+}
+.wv-chibis img {
+    width: 30px;
+    height: auto;
+    image-rendering: pixelated;
+    display: block;
+    animation: chibiBob 0.7s ease-in-out infinite alternate;
+}
+.wv-chibis img:nth-child(1) { animation-delay: 0s; }
+.wv-chibis img:nth-child(2) { animation-delay: 0.08s; }
+.wv-chibis img:nth-child(3) { animation-delay: 0.16s; }
+.wv-chibis img:nth-child(4) { animation-delay: 0.24s; }
+.wv-chibis img:nth-child(5) { animation-delay: 0.32s; }
+.wv-chibis img:nth-child(6) { animation-delay: 0.40s; }
+.wv-chibis img:nth-child(7) { animation-delay: 0.48s; }
+.wv-chibis img:nth-child(8) { animation-delay: 0.56s; }
+.wv-chibis img:nth-child(9) { animation-delay: 0.64s; }
+
+@keyframes chibiBob {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-3px); }
+}
+
+/* ============ WIDGET SPOTIFY ============ */
+.widget-spotify {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(20, 20, 24, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(201, 168, 106, 0.25);
+    border-radius: 14px;
+    padding: 10px 14px 10px 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 300px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.widget-spotify.active { visibility: visible; opacity: 1; }
+
+.ws-cover {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05) center/cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(201, 168, 106, 0.2);
+    animation: spinCover 8s linear infinite;
+}
+@keyframes spinCover {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+.ws-info { min-width: 0; flex: 1; }
+.ws-info strong {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #ddd;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ws-info span {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #888;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ============ MOBILE ============ */
 @media (max-width: 560px) {
-    .page-wrap { padding: 30px 16px; }
+    .page-wrap { padding: 30px 16px 200px; }
     .tabs { overflow-x: auto; }
     .tab { padding: 10px 10px; font-size: 0.78rem; }
     .username { font-size: 1.15rem; }
     .content-section { padding: 16px 18px; }
+
+    .widget-views { bottom: 12px; right: 12px; padding: 8px 10px; }
+    .wv-chibis { height: 38px; }
+    .wv-chibis img { width: 24px; }
+
+    .widget-spotify { bottom: 12px; left: 12px; right: auto; max-width: 200px; }
+    .ws-cover { width: 34px; height: 34px; }
 }
