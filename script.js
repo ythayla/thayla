@@ -141,23 +141,36 @@ function copyName(text) {
 })();
 
 (function() {
-    var el = document.getElementById('wv-count');
-    if (!el) return;
+    var countEl = document.getElementById('wv-count');
+    var chibisEl = document.getElementById('wv-chibis');
+    if (!countEl || !chibisEl) return;
+
+    function renderNumber(num) {
+        var str = String(num);
+        chibisEl.innerHTML = '';
+        for (var i = 0; i < str.length; i++) {
+            var digit = str[i];
+            var img = document.createElement('img');
+            img.src = 'source/views/' + digit + '.gif';
+            img.alt = digit;
+            chibisEl.appendChild(img);
+        }
+    }
 
     function update() {
-        fetch('https://hits.sh/ythayla.vercel.app.json')
+        fetch('https://api.counterapi.dev/v1/ythayla/thayla-site/up')
             .then(function(r) { return r.json(); })
             .then(function(d) {
-                if (d && typeof d.value !== 'undefined') {
-                    el.textContent = d.value;
-                } else if (d && d.count) {
-                    el.textContent = d.count;
+                if (d && typeof d.count !== 'undefined') {
+                    countEl.textContent = d.count;
+                    renderNumber(d.count);
                 }
             })
             .catch(function() {
-                el.textContent = '—';
+                countEl.textContent = '—';
             });
     }
+
     update();
     setInterval(update, 60000);
 })();
