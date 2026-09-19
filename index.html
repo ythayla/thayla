@@ -3,114 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co; media-src 'self' https://res.cloudinary.com blob: data:; connect-src 'self' https://res.cloudinary.com https://api.lanyard.rest https://*.lanyard.rest; object-src 'none'; base-uri 'self';">
-<title>Thay</title>
-<meta name="theme-color" content="#ff4d4d">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co; media-src 'self' blob: data:; connect-src 'self' https://api.lanyard.rest https://*.lanyard.rest; object-src 'none'; base-uri 'self';">
+<title>ythay ♡</title>
+<meta name="theme-color" content="#c8a0e0">
 <link rel="icon" type="image/png" href="source/superminime.png">
 <link rel="apple-touch-icon" href="source/superminime.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<video id="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
-    <source src="https://res.cloudinary.com/gf3crhhf/video/upload/SO_BITTER_ANIMATION_MEME_-_cereal_1080p_h264_youtube_1.mp4" type="video/mp4">
-</video>
-<div class="bg-dim"></div>
+<!-- estrelinhas caindo -->
+<div class="stars" id="stars"></div>
+
 <div id="bunny">🐇</div>
 <div id="cursor-glow"></div>
 
 <div id="overlay" onclick="startExperience()">
-    <div class="click-text"> 🏳️‍⚧️ </div>
+    <div class="click-text">✦</div>
+    <div class="click-hint">clica pra entrar</div>
 </div>
 
 <div id="view-toggle" title="Ocultar/Mostrar Interface">
     <i class="fas fa-eye" id="view-icon"></i>
 </div>
 
-<div id="volume-control">
-    <i class="fas fa-volume-up" id="volume-icon"></i>
-    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
-</div>
-
 <div class="hero-section">
     <div id="content">
 
-        <img src="source/minime.png" alt="Minime Skin" class="hero-minime-side">
+        <img src="source/minime.png" alt="minime" class="hero-minime-side">
 
-        <img src="source/avatar.png" alt="Avatar Sayuri" class="avatar">
-        <div class="username">yThay</div>
-
-        <!-- STATUS DISCORD -->
-        <div class="bio">
-            <span class="status-line" id="discord-status">
-                <span class="status-dot"></span>
-                <span class="status-text">carregando...</span>
-            </span>
+        <div class="profile-header">
+            <div class="avatar-wrap">
+                <img src="source/avatar.png" alt="avatar" class="avatar">
+                <span class="status-dot-badge" id="status-badge"></span>
+            </div>
+            <div class="profile-info">
+                <div class="username">ythay</div>
+                <div class="handle" id="discord-status">
+                    <span class="status-text">carregando...</span>
+                </div>
+            </div>
         </div>
 
-        <!-- ABAS -->
         <nav class="tabs">
-            <button class="tab active" data-page="about">about</button>
-            <button class="tab" data-page="friends">friends</button>
-            <button class="tab" data-page="contact">contact</button>
-            <button class="tab" data-page="extra">extra</button>
+            <button class="tab active" data-page="about">sobre</button>
+            <button class="tab" data-page="friends">amigues</button>
+            <button class="tab" data-page="contact">contato</button>
+            <button class="tab" data-page="extra">+</button>
         </nav>
 
-        <!-- ABOUT -->
         <section id="about" class="page active">
             <p class="page-text">
-                hii, i'm <strong>thay</strong> ♡ <br>
-                welcome to my little corner of the internet.
+                oi! eu sou a <strong>thay</strong> ♡
             </p>
             <p class="page-text small">
-                just a small place where i keep things that i like.
+                esse é meu cantinho na internet. um lugar pequeno
+                onde eu guardo as coisas que eu gosto.
             </p>
         </section>
 
-        <!-- FRIENDS -->
         <section id="friends" class="page">
-            <p class="page-text">my favourite people ♡</p>
+            <p class="page-text">pessoas que fazem meu dia melhor ♡</p>
             <div class="friends-grid">
 
                 <a class="friend" href="#" target="_blank">
                     <div class="friend-avatar">A</div>
                     <div>
-                        <strong>friendname</strong>
-                        <span>@username</span>
+                        <strong>amigue 1</strong>
+                        <span>@user</span>
                     </div>
                 </a>
 
                 <a class="friend" href="#" target="_blank">
                     <div class="friend-avatar">B</div>
                     <div>
-                        <strong>another friend</strong>
-                        <span>@username</span>
+                        <strong>amigue 2</strong>
+                        <span>@user</span>
                     </div>
                 </a>
 
                 <a class="friend" href="#" target="_blank">
                     <div class="friend-avatar">C</div>
                     <div>
-                        <strong>someone else</strong>
-                        <span>@username</span>
+                        <strong>amigue 3</strong>
+                        <span>@user</span>
                     </div>
                 </a>
 
             </div>
         </section>
 
-        <!-- CONTACT -->
         <section id="contact" class="page">
 
-            <p class="page-text">find me ♡</p>
+            <p class="page-text">onde me achar ♡</p>
 
             <div class="contact-grid">
 
                 <a href="http://discordapp.com/users/947175002007015484" target="_blank" class="contact-card">
                     <span class="icon"><i class="fab fa-discord"></i></span>
                     <div>
-                        <strong>Discord</strong>
+                        <strong>discord</strong>
                         <small>@ythay</small>
                     </div>
                     <span class="arrow">↗</span>
@@ -119,15 +115,32 @@
                 <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank" class="contact-card">
                     <span class="icon"><i class="fab fa-spotify"></i></span>
                     <div>
-                        <strong>Spotify</strong>
-                        <small>what i'm listening to</small>
+                        <strong>spotify</strong>
+                        <small>o que eu tô ouvindo</small>
+                    </div>
+                    <span class="arrow">↗</span>
+                </a>
+
+                <a href="https://steamcommunity.com/profiles/76561199241246447" target="_blank" class="contact-card">
+                    <span class="icon"><i class="fab fa-steam"></i></span>
+                    <div>
+                        <strong>steam</strong>
+                        <small>pra jogar junto</small>
+                    </div>
+                    <span class="arrow">↗</span>
+                </a>
+
+                <a href="https://pt.namemc.com/profile/ythayla" target="_blank" class="contact-card">
+                    <span class="icon"><i class="fas fa-cube"></i></span>
+                    <div>
+                        <strong>namemc</strong>
+                        <small>meu perfil mc</small>
                     </div>
                     <span class="arrow">↗</span>
                 </a>
 
             </div>
 
-            <!-- MINECRAFT -->
             <div class="minecraft">
                 <div class="section-heading">
                     <span>◇</span>
@@ -135,52 +148,51 @@
                 </div>
 
                 <div class="minecraft-card">
-                    <div class="mc-avatar">M</div>
+                    <div class="mc-avatar">⛏</div>
                     <div>
                         <strong>ythayla</strong>
-                        <span>minecraft java</span>
+                        <span>java edition</span>
                     </div>
-                    <button onclick="copyName('ythayla')">copy</button>
+                    <button onclick="copyName('ythayla')">copiar</button>
                 </div>
             </div>
 
         </section>
 
-        <!-- EXTRA -->
         <section id="extra" class="page">
             <p class="page-text">
-                a little more about me ♡
+                mais um pouco sobre mim ♡
             </p>
             <p class="page-text small">
-                eu gosto de minecraft pvp, música, passar tempo com amigos e aprender coisas novas.
-                escreve aqui o que tu quiser sobre ti!
+                escreve aqui o que tu quiser — o que tu gosta de jogar,
+                música favorita, qualquer coisa. esse espaço é teu.
             </p>
         </section>
 
-        <!-- SOCIAL LINKS (sempre visíveis) -->
-        <div class="social-links">
-            <a href="https://pt.namemc.com/profile/ythayla" target="_blank" class="social-icon namemc-icon" title="NameMC">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 24" width="1em" height="1em" fill="currentColor">
-                    <path d="M0 0v24h24V0H0zm4.5 4.5h4.125l5.25 8.25V4.5h4.125v15h-4.125l-5.25-8.25v8.25H4.5V4.5z"/>
-                </svg>
-            </a>
-            <a href="https://steamcommunity.com/profiles/76561199241246447" target="_blank"><i class="fab fa-steam" title="Steam"></i></a>
-            <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank"><i class="fab fa-spotify" title="Spotify"></i></a>
-            <a href="http://discordapp.com/users/947175002007015484" target="_blank"><i class="fab fa-discord" title="Discord"></i></a>
-            <a href="https://www.roblox.com/users/2874355099/profile" target="_blank" title="Roblox">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
-                    <path d="M5.164 0L0 18.836 18.836 24 24 5.164 5.164 0zm9.467 14.12-4.587-1.196 1.196-4.587 4.587 1.196-1.196 4.587z"/>
-                </svg>
-            </a>
-        </div>
-
-        <!-- SPOTIFY TOCANDO AGORA -->
         <div class="now-playing" id="now-playing" style="display:none;">
             <div class="np-cover" id="np-cover"></div>
             <div class="np-info">
                 <strong id="np-song">—</strong>
                 <span id="np-artist">—</span>
             </div>
+        </div>
+
+        <div class="social-links">
+            <a href="https://pt.namemc.com/profile/ythayla" target="_blank" title="NameMC">
+                <i class="fas fa-cube"></i>
+            </a>
+            <a href="https://steamcommunity.com/profiles/76561199241246447" target="_blank" title="Steam">
+                <i class="fab fa-steam"></i>
+            </a>
+            <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank" title="Spotify">
+                <i class="fab fa-spotify"></i>
+            </a>
+            <a href="http://discordapp.com/users/947175002007015484" target="_blank" title="Discord">
+                <i class="fab fa-discord"></i>
+            </a>
+            <a href="https://www.roblox.com/users/2874355099/profile" target="_blank" title="Roblox">
+                <i class="fas fa-gamepad"></i>
+            </a>
         </div>
 
     </div>
