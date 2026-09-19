@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://mc-heads.net; media-src 'self' https://res.cloudinary.com blob: data:; connect-src 'self' https://res.cloudinary.com; object-src 'none'; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co; media-src 'self' https://res.cloudinary.com blob: data:; connect-src 'self' https://res.cloudinary.com https://api.lanyard.rest https://*.lanyard.rest; object-src 'none'; base-uri 'self';">
 <title>Thay</title>
 <meta name="theme-color" content="#ff4d4d">
 <link rel="icon" type="image/png" href="source/superminime.png">
@@ -12,34 +12,152 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <video id="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
     <source src="https://res.cloudinary.com/gf3crhhf/video/upload/SO_BITTER_ANIMATION_MEME_-_cereal_1080p_h264_youtube_1.mp4" type="video/mp4">
 </video>
 <div class="bg-dim"></div>
 <div id="bunny">🐇</div>
 <div id="cursor-glow"></div>
+
 <div id="overlay" onclick="startExperience()">
     <div class="click-text"> 🏳️‍⚧️ </div>
 </div>
+
 <div id="view-toggle" title="Ocultar/Mostrar Interface">
     <i class="fas fa-eye" id="view-icon"></i>
 </div>
+
 <div id="volume-control">
     <i class="fas fa-volume-up" id="volume-icon"></i>
     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
 </div>
+
 <div class="hero-section">
     <div id="content">
+
         <img src="source/minime.png" alt="Minime Skin" class="hero-minime-side">
 
         <img src="source/avatar.png" alt="Avatar Sayuri" class="avatar">
         <div class="username">yThay</div>
+
+        <!-- STATUS DISCORD -->
         <div class="bio">
-            <span>✂ ️</span>
-            <div class="sub-counter" id="yt-counter">
-                <i class="fas fa-heart"></i>
-            </div>
+            <span class="status-line" id="discord-status">
+                <span class="status-dot"></span>
+                <span class="status-text">carregando...</span>
+            </span>
         </div>
+
+        <!-- ABAS -->
+        <nav class="tabs">
+            <button class="tab active" data-page="about">about</button>
+            <button class="tab" data-page="friends">friends</button>
+            <button class="tab" data-page="contact">contact</button>
+            <button class="tab" data-page="extra">extra</button>
+        </nav>
+
+        <!-- ABOUT -->
+        <section id="about" class="page active">
+            <p class="page-text">
+                hii, i'm <strong>thay</strong> ♡ <br>
+                welcome to my little corner of the internet.
+            </p>
+            <p class="page-text small">
+                just a small place where i keep things that i like.
+            </p>
+        </section>
+
+        <!-- FRIENDS -->
+        <section id="friends" class="page">
+            <p class="page-text">my favourite people ♡</p>
+            <div class="friends-grid">
+
+                <a class="friend" href="#" target="_blank">
+                    <div class="friend-avatar">A</div>
+                    <div>
+                        <strong>friendname</strong>
+                        <span>@username</span>
+                    </div>
+                </a>
+
+                <a class="friend" href="#" target="_blank">
+                    <div class="friend-avatar">B</div>
+                    <div>
+                        <strong>another friend</strong>
+                        <span>@username</span>
+                    </div>
+                </a>
+
+                <a class="friend" href="#" target="_blank">
+                    <div class="friend-avatar">C</div>
+                    <div>
+                        <strong>someone else</strong>
+                        <span>@username</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="page">
+
+            <p class="page-text">find me ♡</p>
+
+            <div class="contact-grid">
+
+                <a href="http://discordapp.com/users/947175002007015484" target="_blank" class="contact-card">
+                    <span class="icon"><i class="fab fa-discord"></i></span>
+                    <div>
+                        <strong>Discord</strong>
+                        <small>@ythay</small>
+                    </div>
+                    <span class="arrow">↗</span>
+                </a>
+
+                <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank" class="contact-card">
+                    <span class="icon"><i class="fab fa-spotify"></i></span>
+                    <div>
+                        <strong>Spotify</strong>
+                        <small>what i'm listening to</small>
+                    </div>
+                    <span class="arrow">↗</span>
+                </a>
+
+            </div>
+
+            <!-- MINECRAFT -->
+            <div class="minecraft">
+                <div class="section-heading">
+                    <span>◇</span>
+                    <h2>minecraft</h2>
+                </div>
+
+                <div class="minecraft-card">
+                    <div class="mc-avatar">M</div>
+                    <div>
+                        <strong>ythayla</strong>
+                        <span>minecraft java</span>
+                    </div>
+                    <button onclick="copyName('ythayla')">copy</button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- EXTRA -->
+        <section id="extra" class="page">
+            <p class="page-text">
+                a little more about me ♡
+            </p>
+            <p class="page-text small">
+                eu gosto de minecraft pvp, música, passar tempo com amigos e aprender coisas novas.
+                escreve aqui o que tu quiser sobre ti!
+            </p>
+        </section>
+
+        <!-- SOCIAL LINKS (sempre visíveis) -->
         <div class="social-links">
             <a href="https://pt.namemc.com/profile/ythayla" target="_blank" class="social-icon namemc-icon" title="NameMC">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 24" width="1em" height="1em" fill="currentColor">
@@ -50,525 +168,26 @@
             <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank"><i class="fab fa-spotify" title="Spotify"></i></a>
             <a href="http://discordapp.com/users/947175002007015484" target="_blank"><i class="fab fa-discord" title="Discord"></i></a>
             <a href="https://www.roblox.com/users/2874355099/profile" target="_blank" title="Roblox">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
-            <path d="M5.164 0L0 18.836 18.836 24 24 5.164 5.164 0zm9.467 14.12-4.587-1.196 1.196-4.587 4.587 1.196-1.196 4.587z"/>
-        </svg>
-    </a>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
+                    <path d="M5.164 0L0 18.836 18.836 24 24 5.164 5.164 0zm9.467 14.12-4.587-1.196 1.196-4.587 4.587 1.196-1.196 4.587z"/>
+                </svg>
+            </a>
         </div>
-    </div> 
+
+        <!-- SPOTIFY TOCANDO AGORA -->
+        <div class="now-playing" id="now-playing" style="display:none;">
+            <div class="np-cover" id="np-cover"></div>
+            <div class="np-info">
+                <strong id="np-song">—</strong>
+                <span id="np-artist">—</span>
+            </div>
+        </div>
+
+    </div>
 </div>
-<script>
-var video = document.getElementById('bg-video');
-if (video) {
-    video.muted = true;
-    video.defaultMuted = true;
-    video.play().catch(function(){});
-}
-function startExperience() {
-    var overlay = document.getElementById('overlay');
-    var content = document.getElementById('content');
-    var volumeControl = document.getElementById('volume-control');
-    var viewToggle = document.getElementById('view-toggle');
-    overlay.style.pointerEvents = 'none';
-    overlay.style.opacity = '0';
-    setTimeout(function() { 
-        overlay.style.display = 'none'; 
-    }, 400);
-    content.style.display = 'flex';
-    setTimeout(function() {
-        content.style.opacity = '1';
-    }, 50);
-    volumeControl.classList.add('ativo');
-    viewToggle.classList.add('ativo');
-    if (video) {
-        video.muted = false;
-        video.volume = 1.0;
-        video.play().catch(function(e) { console.log("Aviso de vídeo:", e); });
-    }
-}
-var volumeSlider = document.getElementById('volume-slider');
-var volumeIcon = document.getElementById('volume-icon');
-var ultimoVolume = 1.0;
-volumeSlider.addEventListener('input', function() {
-    if (!video) return;
-    var novoVolume = parseFloat(this.value);
-    video.muted = false;
-    video.volume = novoVolume;
-    if (novoVolume > 0) ultimoVolume = novoVolume;
-    atualizarIcone(novoVolume);
-});
-volumeIcon.addEventListener('click', function() {
-    if (!video) return;
-    if (video.volume > 0) {
-        ultimoVolume = video.volume;
-        video.volume = 0;
-        volumeSlider.value = 0;
-        atualizarIcone(0);
-    } else {
-        var volumeParaVoltar = ultimoVolume > 0 ? ultimoVolume : 1.0;
-        video.muted = false;
-        video.volume = volumeParaVoltar;
-        volumeSlider.value = volumeParaVoltar;
-        atualizarIcone(volumeParaVoltar);
-    }
-});
-function atualizarIcone(valor) {
-    if (valor == 0) volumeIcon.className = 'fas fa-volume-mute';
-    else if (valor < 0.5) volumeIcon.className = 'fas fa-volume-down';
-    else volumeIcon.className = 'fas fa-volume-up'; 
-}
-function aplicarInclinacao(e) {
-    var content = document.getElementById("content");
-    if (content.style.display === 'flex') {
-        var rect = content.getBoundingClientRect();
-        var centroX = rect.left + rect.width / 2;
-        var centroY = rect.top + rect.height / 2;
-        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        var distanciaX = clientX - centroX;
-        var distanciaY = clientY - centroY;
-        var inclinacaoX = distanciaY / 25; 
-        var inclinacaoY = -(distanciaX / 25);
-        content.style.transform = `perspective(1000px) rotateX(${inclinacaoX}deg) rotateY(${inclinacaoY}deg)`;
-    }
-}
-document.addEventListener("mousemove", aplicarInclinacao);
-document.addEventListener("touchmove", aplicarInclinacao);
-function removerInclinacao() {
-    var content = document.getElementById("content");
-    if (content.style.display === 'flex') {
-        content.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-    }
-}
-document.addEventListener("mouseleave", removerInclinacao);
-document.addEventListener("touchend", removerInclinacao);
-var isUIHidden = false;
-function atualizarVisualizacao() {
-    var content = document.getElementById('content');
-    var volumeControl = document.getElementById('volume-control');
-    var viewIcon = document.getElementById('view-icon');
-    var viewToggle = document.getElementById('view-toggle');
-    var overlay = document.getElementById('overlay');
-    if (overlay && overlay.style.display !== 'none') return;
-    if (isUIHidden) {
-        if (content) { content.style.opacity = '0'; content.style.pointerEvents = 'none'; }
-        if (volumeControl) { volumeControl.classList.remove('ativo'); }
-        if (viewToggle) viewToggle.classList.add('ativo');
-        if (viewIcon) viewIcon.className = 'fas fa-eye-slash'; 
-    } else {
-        if (content) { content.style.opacity = '1'; content.style.pointerEvents = 'auto'; }
-        if (volumeControl) { volumeControl.classList.add('ativo'); }
-        if (viewToggle) viewToggle.classList.add('ativo');
-        if (viewIcon) viewIcon.className = 'fas fa-eye';
-    }
-}
-document.getElementById('view-toggle').addEventListener('click', function() {
-    isUIHidden = !isUIHidden;
-    atualizarVisualizacao();
-});
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Tab') {
-        e.preventDefault(); 
-        if (e.repeat) return;
-        isUIHidden = !isUIHidden; 
-        atualizarVisualizacao();
-    }
-});
-</script>
-<script>
-(function() {
-    const bunny = document.getElementById('bunny');
-    if (!bunny) return;
-    let currentX = 50;
-    let currentY = window.innerHeight - 60;
-    let mouseX = currentX;
-    let mouseY = currentY;
-    let jumpPhase = 0;
-    let facingRight = false;
-    let isSwapped = false;
-    let canEat = false;
-    let hasMoved = false;
-    const bunnyCursorSVG = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">🐇</text></svg>`;
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        if (!hasMoved) {
-            hasMoved = true;
-            canEat = true;
-        }
-    });
-    window.addEventListener('touchmove', (e) => {
-        if (e.touches.length > 0) {
-            mouseX = e.touches[0].clientX;
-            mouseY = e.touches[0].clientY;
-            if (!hasMoved) {
-                hasMoved = true;
-                canEat = true;
-            }
-        }
-    }, { passive: true });
-    function triggerEatEffect(x, y) {
-        for (let i = 0; i < 8; i++) {
-            const spark = document.createElement('div');
-            spark.className = 'firework-spark';
-            spark.style.width = '4px';
-            spark.style.height = '4px';
-            document.body.appendChild(spark);
-            const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 3 + 1;
-            let vx = Math.cos(angle) * speed;
-            let vy = Math.sin(angle) * speed;
-            let posX = x;
-            let posY = y;
-            let life = 0;
-            function anim() {
-                life++;
-                posX += vx;
-                posY += vy;
-                spark.style.left = `${posX}px`;
-                spark.style.top = `${posY}px`;
-                spark.style.opacity = `${1 - life / 20}`;
-                if (life < 20) {
-                    requestAnimationFrame(anim);
-                } else {
-                    spark.remove();
-                }
-            }
-            anim();
-        }
-    }
-    function swapRoles() {
-        canEat = false;
-        isSwapped = !isSwapped;
-        triggerEatEffect(currentX, currentY);
-        if (isSwapped) {
-            document.body.style.cursor = `url('${bunnyCursorSVG}') 4 4, auto`;
-            bunny.textContent = '🥕';
-        } else {
-            document.body.style.cursor = 'url("source/cursor_trans.png") 16 16, auto';
-            bunny.textContent = '🐇';
-        }
-        setTimeout(() => {
-            canEat = true;
-        }, 1200);
-    }
-    function animate() {
-        const dx = mouseX - currentX;
-        const dy = mouseY - currentY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (Math.abs(dx) > 2) {
-            facingRight = dx > 0;
-        }
-        let jumpOffsetY = 0;
-        let squash = 1;
 
-        if (distance < 14 && canEat) {
-            swapRoles();
-        }
-        if (distance > 10) {
-            const speed = 0.3;
-            currentX += (dx / distance) * speed;
-            currentY += (dy / distance) * speed;
-            jumpPhase += 0.12;
-            const jumpHeight = 12;
-            const jumpProgress = Math.sin(jumpPhase);
-            jumpOffsetY = -Math.max(0, jumpProgress) * jumpHeight;
-            if (jumpProgress > 0) {
-                squash = 1 + jumpProgress * 0.15;
-            } else {
-                squash = 1 + jumpProgress * 0.1;
-            }
-        } else {
-            jumpOffsetY = 0;
-            squash = 1;
-        }
-        const scaleX = (facingRight && !isSwapped) ? -1 : 1;
-        bunny.style.transform = `translate(${currentX - 14}px, ${currentY - 20 + jumpOffsetY}px) scaleX(${scaleX}) scaleY(${squash})`;
-        requestAnimationFrame(animate);
-    }
-    animate();
-})();
-</script>
-<script>
-(function() {
-    const usernameEl = document.querySelector('.username');
-    if (!usernameEl) return;
-    function spawnMiniFirework(x, y) {
-        const particleCount = 10 + Math.floor(Math.random() * 8);
-        for (let i = 0; i < particleCount; i++) {
-            const spark = document.createElement('div');
-            spark.className = 'firework-spark';
-            const size = Math.random() * 2.5 + 1.5;
-            spark.style.width = `${size}px`;
-            spark.style.height = `${size}px`;
-            document.body.appendChild(spark);
-            const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 2.5 + 1;
-            let vx = Math.cos(angle) * speed;
-            let vy = Math.sin(angle) * speed;
-            let posX = x;
-            let posY = y;
-            let opacity = 1;
-            let life = 0;
-            const maxLife = 35 + Math.random() * 20;
-            function animateSpark() {
-                life++;
-                posX += vx;
-                posY += vy;
-                vy += 0.04;
-                vx *= 0.96;
-                vy *= 0.96;
-                opacity = 1 - (life / maxLife);
-                spark.style.left = `${posX}px`;
-                spark.style.top = `${posY}px`;
-                spark.style.opacity = opacity;
-                spark.style.transform = `scale(${opacity})`;
-                if (life < maxLife) {
-                    requestAnimationFrame(animateSpark);
-                } else {
-                    spark.remove();
-                }
-            }
-            animateSpark();
-        }
-    }
-    function triggerRandomBurst() {
-        if (window.getComputedStyle(usernameEl).opacity === "0") {
-            setTimeout(triggerRandomBurst, 30);
-            return;
-        }
-        const rect = usernameEl.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0) {
-            const burstX = rect.left + Math.random() * rect.width;
-            const burstY = rect.top + Math.random() * rect.height;
-            spawnMiniFirework(burstX, burstY);
-        }
-        const nextBurst = Math.random() * 600 + 400;
-        setTimeout(triggerRandomBurst, nextBurst);
-    }
-    triggerRandomBurst();
-})();
-</script>
-<script>
-(function() {
-    const usernameEl = document.querySelector('.username');
-    if (!usernameEl) return;
-    let burstTimeout = null;
-    function clearAllSparks() {
-        document.querySelectorAll('.firework-spark').forEach(spark => spark.remove());
-    }
-    function spawnMiniFirework(x, y) {
-        if (document.hidden) return;
-        const particleCount = 10 + Math.floor(Math.random() * 8);
-        for (let i = 0; i < particleCount; i++) {
-            const spark = document.createElement('div');
-            spark.className = 'firework-spark';
-            const size = Math.random() * 2.5 + 1.5;
-            spark.style.width = `${size}px`;
-            spark.style.height = `${size}px`;
-            document.body.appendChild(spark);
-            const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 2.5 + 1;
-            let vx = Math.cos(angle) * speed;
-            let vy = Math.sin(angle) * speed;
-            let posX = x;
-            let posY = y;
-            let life = 0;
-            const maxLife = 35 + Math.random() * 20;
-            function animateSpark() {
-                if (document.hidden) {
-                    spark.remove();
-                    return;
-                }
-                life++;
-                posX += vx;
-                posY += vy;
-                vy += 0.04;
-                vx *= 0.96;
-                vy *= 0.96;
-                opacity = 1 - (life / maxLife);
-                spark.style.left = `${posX}px`;
-                spark.style.top = `${posY}px`;
-                spark.style.opacity = opacity;
-                spark.style.transform = `scale(${opacity})`;
+<div id="toast">copiado ♡</div>
 
-                if (life < maxLife) {
-                    requestAnimationFrame(animateSpark);
-                } else {
-                    spark.remove();
-                }
-            }
-            requestAnimationFrame(animateSpark);
-        }
-    }
-    function triggerRandomBurst() {
-        if (document.hidden || window.getComputedStyle(usernameEl).opacity === "0") {
-            burstTimeout = setTimeout(triggerRandomBurst, 500);
-            return;
-        }
-        const rect = usernameEl.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0) {
-            const burstX = rect.left + Math.random() * rect.width;
-            const burstY = rect.top + Math.random() * rect.height;
-            spawnMiniFirework(burstX, burstY);
-        }
-        const nextBurst = Math.random() * 600 + 400;
-        burstTimeout = setTimeout(triggerRandomBurst, nextBurst);
-    }
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            clearTimeout(burstTimeout);
-            clearAllSparks();
-        } else {
-            clearTimeout(burstTimeout);
-            triggerRandomBurst();
-        }
-    });
-
-    triggerRandomBurst();
-})();
-</script>
-<script>
-(function() {
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-    const isSmallScreen = window.innerWidth <= 768;
-    function adjustMobileViewport() {
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-        const hero = document.querySelector('.hero-section');
-        if (hero) hero.style.minHeight = `${window.innerHeight}px`;
-    }
-    adjustMobileViewport();
-    window.addEventListener('resize', adjustMobileViewport, { passive: true });
-    window.addEventListener('orientationchange', () => {
-        setTimeout(adjustMobileViewport, 150);
-    });
-    const content = document.getElementById('content');
-    if (isTouchDevice && content) {
-        document.removeEventListener('touchmove', window.aplicarInclinacao);
-        document.removeEventListener('touchend', window.removerInclinacao);
-        content.style.transform = 'none';
-        content.addEventListener('touchstart', function() {
-            content.style.transform = 'scale(0.98)';
-        }, { passive: true });
-        content.addEventListener('touchend', function() {
-            content.style.transform = 'none';
-        }, { passive: true });
-    }
-    const video = document.getElementById('bg-video');
-    if (video) {
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden && video.paused) {
-                video.play().catch(() => {});
-            }
-        });
-        window.addEventListener('focus', function() {
-            if (video.paused) video.play().catch(() => {});
-        });
-    }
-    const volumeControl = document.getElementById('volume-control');
-    const qualityToggle = document.getElementById('quality-toggle');
-    if (isSmallScreen) {
-        if (volumeControl) {
-            volumeControl.style.top = '12px';
-            volumeControl.style.left = '12px';
-            volumeControl.style.padding = '8px 12px';
-        }
-        if (qualityToggle) {
-            qualityToggle.style.bottom = '12px';
-            qualityToggle.style.left = '12px';
-        }
-    }
-})();
-</script>
-<script>
-(function() {
-    const video = document.getElementById('bg-video');
-    const volumeSlider = document.getElementById('volume-slider');
-    if (!video || !volumeSlider) return;
-
-    function reaplicarVolume() {
-        if (video.muted) return;
-        var vol = parseFloat(volumeSlider.value);
-        if (isNaN(vol)) vol = 1.0;
-        if (Math.abs(video.volume - vol) > 0.01) {
-            video.volume = vol;
-        }
-    }
-
-    video.addEventListener('seeked', reaplicarVolume);
-    video.addEventListener('play', reaplicarVolume);
-    video.addEventListener('playing', reaplicarVolume);
-
-    video.addEventListener('timeupdate', function() {
-        if (video.currentTime < 0.5) {
-            reaplicarVolume();
-        }
-    });
-
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) {
-            reaplicarVolume();
-            if (video.paused) {
-                video.play().catch(function(){});
-            }
-        }
-    });
-
-    window.addEventListener('focus', function() {
-        reaplicarVolume();
-        if (video.paused) {
-            video.play().catch(function(){});
-        }
-    });
-})();
-</script>
-<script>
-(function() {
-    var glow = document.getElementById('cursor-glow');
-    if (!glow) return;
-    var mouseX = -100, mouseY = -100;
-    var glowX = -100, glowY = -100;
-    var ativo = false;
-    var pararTimeout = null;
-
-    window.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        if (!ativo) {
-            glow.classList.add('active');
-            ativo = true;
-        }
-        clearTimeout(pararTimeout);
-        pararTimeout = setTimeout(function() {
-            glow.classList.remove('active');
-            ativo = false;
-        }, 300);
-    }, { passive: true });
-
-    window.addEventListener('touchmove', function(e) {
-        if (e.touches.length > 0) {
-            mouseX = e.touches[0].clientX;
-            mouseY = e.touches[0].clientY;
-            glow.classList.add('active');
-            ativo = true;
-            clearTimeout(pararTimeout);
-            pararTimeout = setTimeout(function() {
-                glow.classList.remove('active');
-                ativo = false;
-            }, 300);
-        }
-    }, { passive: true });
-
-    function animar() {
-        glowX += (mouseX - glowX) * 0.15;
-        glowY += (mouseY - glowY) * 0.15;
-        glow.style.left = glowX + 'px';
-        glow.style.top = glowY + 'px';
-        requestAnimationFrame(animar);
-    }
-    animar();
-})();
-</script>
+<script src="script.js"></script>
 </body>
 </html>
