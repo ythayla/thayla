@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co https://lastfm.freetls.fastly.net https://*.fastly.net; media-src 'self' blob: data:; connect-src 'self' https://api.lanyard.rest https://*.lanyard.rest https://ws.audioscrobbler.com https://hits.sh; object-src 'none'; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co https://lastfm.freetls.fastly.net https://*.fastly.net; media-src 'self' blob: data:; connect-src 'self' https://api.lanyard.rest https://*.lanyard.rest https://ws.audioscrobbler.com https://hits.sh https://api.counterapi.dev; object-src 'none'; base-uri 'self';">
 <title>ythay</title>
 <meta name="theme-color" content="#1a1a1a">
 <link rel="icon" type="image/png" href="source/superminime.png">
@@ -164,17 +164,7 @@
         <span class="wv-label">views</span>
         <span class="wv-count" id="wv-count">—</span>
     </div>
-    <div class="wv-chibis">
-        <img src="source/views/1.gif" alt="chibi 1">
-        <img src="source/views/2.gif" alt="chibi 2">
-        <img src="source/views/3.gif" alt="chibi 3">
-        <img src="source/views/4.gif" alt="chibi 4">
-        <img src="source/views/5.gif" alt="chibi 5">
-        <img src="source/views/6.gif" alt="chibi 6">
-        <img src="source/views/7.gif" alt="chibi 7">
-        <img src="source/views/8.gif" alt="chibi 8">
-        <img src="source/views/9.gif" alt="chibi 9">
-    </div>
+    <div class="wv-chibis" id="wv-chibis"></div>
 </div>
 
 <div id="widget-spotify" class="widget-spotify">
