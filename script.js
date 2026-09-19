@@ -1,4 +1,3 @@
-/* ============ OVERLAY ============ */
 function startExperience() {
     var overlay = document.getElementById('overlay');
     var content = document.getElementById('content');
@@ -20,7 +19,6 @@ function startExperience() {
     if (toggle) toggle.classList.add('active');
 }
 
-/* ============ ABAS ============ */
 (function() {
     var tabs = document.querySelectorAll('.tab');
     var sections = document.querySelectorAll('.content-section');
@@ -45,7 +43,6 @@ function startExperience() {
     }
 })();
 
-/* ============ ESCONDER UI (Tab) ============ */
 var uiHidden = false;
 function toggleUI() {
     var content = document.getElementById('content');
@@ -75,7 +72,6 @@ document.getElementById('view-toggle').addEventListener('click', function() {
     toggleUI();
 });
 
-/* ============ COPIAR NICK ============ */
 function copyName(text) {
     navigator.clipboard.writeText(text);
     var toast = document.getElementById('toast');
@@ -84,15 +80,10 @@ function copyName(text) {
     setTimeout(function() { toast.classList.remove('show'); }, 1600);
 }
 
-/* ============ LANYARD — STATUS ============ */
 (function() {
     var DISCORD_ID = '947175002007015484';
     var dot = document.getElementById('status-dot');
     var text = document.getElementById('status-text');
-    var nowPlaying = document.getElementById('now-playing');
-    var npCover = document.getElementById('np-cover');
-    var npSong = document.getElementById('np-song');
-    var npArtist = document.getElementById('np-artist');
     if (!text) return;
 
     var labels = { online: 'online', idle: 'ausente', dnd: 'ocupada', offline: 'offline' };
@@ -104,22 +95,12 @@ function copyName(text) {
                 if (!res.success) {
                     text.textContent = 'offline';
                     dot.className = 'dot offline';
-                    if (nowPlaying) nowPlaying.style.display = 'none';
                     return;
                 }
                 var d = res.data;
                 var st = d.discord_status || 'offline';
                 text.textContent = labels[st] || st;
                 dot.className = 'dot ' + st;
-
-                if (nowPlaying && d.listening_to_spotify && d.spotify) {
-                    nowPlaying.style.display = 'flex';
-                    npCover.style.backgroundImage = 'url(' + d.spotify.album_art_url + ')';
-                    npSong.textContent = d.spotify.song;
-                    npArtist.textContent = d.spotify.artist;
-                } else if (nowPlaying) {
-                    nowPlaying.style.display = 'none';
-                }
             })
             .catch(function() {
                 text.textContent = 'offline';
@@ -130,7 +111,6 @@ function copyName(text) {
     setInterval(update, 15000);
 })();
 
-/* ============ AVATARES DOS AMIGUES ============ */
 (function() {
     var avatars = document.querySelectorAll('.friend-avatar[data-discord-id]');
     if (!avatars.length) return;
@@ -160,7 +140,6 @@ function copyName(text) {
     });
 })();
 
-/* ============ WIDGET DE VIEWS (hits.sh) ============ */
 (function() {
     var el = document.getElementById('wv-count');
     if (!el) return;
@@ -183,7 +162,6 @@ function copyName(text) {
     setInterval(update, 60000);
 })();
 
-/* ============ WIDGET SPOTIFY (Last.fm) ============ */
 (function() {
     var LASTFM_USER = 'ythayla';
     var LASTFM_KEY = '4b3809d023a1908d38f0443164318b4e';
@@ -216,7 +194,6 @@ function copyName(text) {
 
                 var img = null;
                 if (t.image && t.image.length) {
-                    // pega a maior imagem disponível
                     var last = t.image[t.image.length - 1];
                     img = last['#text'] || '';
                 }
