@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="184" height="56" viewBox="0 0 184 56">
+  <defs>
+    <clipPath id="les"><rect x="2" y="6" width="72" height="44" rx="5"/></clipPath>
+    <clipPath id="tra"><rect x="110" y="6" width="72" height="44" rx="5"/></clipPath>
+  </defs>
+  <g clip-path="url(#les)">
+    <rect x="2" y="6" width="72" height="6.3" fill="#D52D00"/>
+    <rect x="2" y="12.3" width="72" height="6.3" fill="#EF7627"/>
+    <rect x="2" y="18.6" width="72" height="6.3" fill="#FF9E56"/>
+    <rect x="2" y="24.9" width="72" height="6.2" fill="#FFFFFF"/>
+    <rect x="2" y="31.1" width="72" height="6.3" fill="#D362A4"/>
+    <rect x="2" y="37.4" width="72" height="6.3" fill="#B75593"/>
+    <rect x="2" y="43.7" width="72" height="6.3" fill="#A30262"/>
+  </g>
+  <path d="M92 44 C88 38 80 36 80 29 C80 25 83 22 87 22 C89 22 91 23 92 25 C93 23 95 22 97 22 C101 22 104 25 104 29 C104 36 96 38 92 44 Z" fill="none" stroke="#F5A9B8" stroke-width="2"/>
+  <g clip-path="url(#tra)">
+    <rect x="110" y="6" width="72" height="8.8" fill="#5BCEFA"/>
+    <rect x="110" y="14.8" width="72" height="8.8" fill="#F5A9B8"/>
+    <rect x="110" y="23.6" width="72" height="8.8" fill="#FFFFFF"/>
+    <rect x="110" y="32.4" width="72" height="8.8" fill="#F5A9B8"/>
+    <rect x="110" y="41.2" width="72" height="8.8" fill="#5BCEFA"/>
+  </g>
+</svg>

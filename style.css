@@ -802,6 +802,10 @@ body::after { background: none; }
     -webkit-user-drag: none;
 }
 
+.site-flags { margin-top: 28px; text-align: center; }
+.site-flags img { width: 184px; height: auto; display: inline-block; opacity: 0.92; }
+
 @media (max-width: 560px) {
     .gal-palco { height: 184px; }
+    .site-flags img { width: 150px; }
 }
