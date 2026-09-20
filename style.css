@@ -351,15 +351,14 @@ a { color: inherit; text-decoration: none; }
 .wv-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 14px;
 }
 .wv-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    color: #777;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-size: 0.78rem;
+    color: #999;
+    letter-spacing: 1.5px;
 }
 .wv-count {
     font-family: 'JetBrains Mono', monospace;
@@ -372,7 +371,7 @@ a { color: inherit; text-decoration: none; }
     display: flex;
     align-items: flex-end;
     gap: 1px;
-    height: 48px;
+    height: 76px;
     animation: chibiBob 0.7s ease-in-out infinite alternate;
 }
 .wv-chibis img {
@@ -460,7 +459,7 @@ a { color: inherit; text-decoration: none; }
     .content-section { padding: 16px 18px; }
 
     .widget-views { bottom: 12px; right: 12px; padding: 8px 10px; }
-    .wv-chibis { height: 38px; }
+    .wv-chibis { height: 58px; }
 
     .widget-spotify { bottom: 12px; left: 12px; right: auto; max-width: 200px; }
     .ws-cover { width: 34px; height: 34px; }

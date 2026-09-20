@@ -205,7 +205,7 @@ function copyName(text) {
             countEl.textContent = texto;
             countEl.hidden = true;     /* os gifs passam a ser o contador visivel */
         }
-        chibisEl.setAttribute('aria-label', texto + ' visitas');
+        chibisEl.setAttribute('aria-label', texto + ' views');
     }
 
     function falhou() {
@@ -227,7 +227,10 @@ function copyName(text) {
     }
 
     function soLe() {
-        return pede('get').catch(function() { return null; });
+        return pede('get').catch(function() {
+            /* 404 = o contador ainda nao existe: cria ja contando essa visita */
+            return pede('hit');
+        });
     }
 
     (deveContar() ? pede('hit') : soLe())
