@@ -477,8 +477,9 @@ function copyName(text) {
 
     document.addEventListener('keydown', function(e) {
         if (!secao || !secao.classList.contains('active')) return;
-        if (e.key === 'ArrowLeft')  troca(atual - 1);
-        if (e.key === 'ArrowRight') troca(atual + 1);
+        var k = e.key.toLowerCase();
+        if (e.key === 'ArrowLeft'  || k === 'a') troca(atual - 1);
+        if (e.key === 'ArrowRight' || k === 'd') troca(atual + 1);
         if (e.key === ' ') { e.preventDefault(); alterna(); }
     });
 
