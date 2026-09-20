@@ -884,7 +884,7 @@ body::after { background: none; }
     -webkit-user-drag: none;
 }
 
-.site-flags { margin-top: 28px; text-align: center; }
+.site-flags { margin-top: 28px; text-align: center; flex-basis: 100%; }
 .site-flags img { width: 184px; height: auto; display: inline-block; opacity: 0.92; }
 
 @media (max-width: 560px) {
