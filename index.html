@@ -41,6 +41,7 @@
             <button class="tab" data-page="friends">pessoas</button>
             <button class="tab" data-page="contact">contato</button>
             <button class="tab" data-page="extra">mais</button>
+            <button class="tab" data-page="views">views</button>
         </nav>
 
         <section id="about" class="content-section revela" data-rotulo="sobre">
@@ -173,7 +174,14 @@
             </p>
         </section>
 
-        <footer class="site-footer">
+                <section id="views" class="content-section revela">
+            <div class="views-card">
+                <span class="views-rotulo">Views</span>
+                <div class="wv-chibis" id="wv-chibis"></div>
+                <span class="wv-count" id="wv-count" hidden>—</span>
+            </div>
+        </section>
+<footer class="site-footer">
             <a href="https://pt.namemc.com/profile/ythayla" target="_blank" title="namemc"><i class="fas fa-cube"></i></a>
             <a href="https://steamcommunity.com/profiles/76561199241246447" target="_blank" title="steam"><i class="fab fa-steam"></i></a>
             <a href="https://open.spotify.com/user/31cw5lxjyizrou7epajvtjanjmja" target="_blank" title="spotify"><i class="fab fa-spotify"></i></a>
@@ -186,14 +194,6 @@
 </main>
 
 <div id="toast">copiado</div>
-
-<div id="widget-views" class="widget-views active">
-    <div class="wv-header">
-        <span class="wv-label">Views</span>
-        <span class="wv-count" id="wv-count" hidden>—</span>
-    </div>
-    <div class="wv-chibis" id="wv-chibis"></div>
-</div>
 
 <div id="widget-spotify" class="widget-spotify active">
     <div class="ws-cover" id="ws-cover"></div>

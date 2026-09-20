@@ -739,3 +739,35 @@ body::after { background: none; }
     .avatar { width: 92px; height: 92px; }
     .site-footer { margin: 70px 0 110px; }
 }
+
+/* ===== secao de views (contador virou parte do site) ===== */
+.views-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 20px 30px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+}
+.views-rotulo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #999;
+    letter-spacing: 2px;
+}
+.views-card .wv-chibis {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: auto;
+}
+.views-card .wv-chibis img { height: 62px; }
+
+@media (max-width: 560px) {
+    .views-card { padding: 16px 24px 20px; }
+    .views-card .wv-chibis img { height: 52px; }
+}
