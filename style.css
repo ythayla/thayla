@@ -626,3 +626,116 @@ a { color: inherit; text-decoration: none; }
     .gal-item[data-dist="2"]  { transform: translateX(112px)  rotateY(-54deg) scale(0.66); }
     .gal-seta { display: none; }
 }
+
+/* ============================================================
+   MODO SCROLL — fundo preto, secoes descendo e revelando
+   ============================================================ */
+html { scroll-behavior: smooth; }
+body { background: #000; }
+body::before { display: none; }
+body::after { background: none; }
+
+#content {
+    display: block;
+    opacity: 1;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+.page-wrap { display: block; padding: 0 22px; min-height: 0; }
+
+/* menu fixo no topo */
+.tabs {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    background: rgba(8, 8, 10, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 4px 8px;
+    gap: 2px;
+    z-index: 1000;
+    overflow: visible;
+}
+.tab { border-radius: 999px; transition: color 0.2s, background 0.2s; }
+.tab:hover { background: rgba(255, 255, 255, 0.06); }
+.tab.active { background: rgba(201, 168, 106, 0.16); }
+.tab.active::after { display: none; }
+
+/* hero = primeira tela */
+.profile {
+    min-height: 92vh;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 0;
+}
+.avatar { width: 112px; height: 112px; border-radius: 50%; }
+.username { font-size: 2.6rem; letter-spacing: -1px; margin-bottom: 4px; }
+.handle { justify-content: center; font-size: 0.8rem; }
+
+.hero-desce {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 4px;
+    color: #666;
+    animation: descePulsa 1.9s ease-in-out infinite;
+}
+.hero-desce i { color: #c9a86a; font-size: 0.8rem; }
+@keyframes descePulsa {
+    0%, 100% { transform: translateY(0); opacity: 0.65; }
+    50%      { transform: translateY(7px); opacity: 1; }
+}
+
+/* secoes: sem card, espaco vertical, rotulo em cima */
+.content-section {
+    display: block;
+    background: none;
+    border: none;
+    padding: 130px 0 30px;
+}
+.content-section::before {
+    content: attr(data-rotulo);
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #c9a86a;
+    margin-bottom: 22px;
+}
+
+/* revela ao rolar */
+.revela { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.revela.on { opacity: 1; transform: none; }
+
+/* amigos */
+.friend-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(201, 168, 106, 0.25);
+    background: #141418;
+}
+
+.site-footer { margin: 100px 0 130px; }
+
+@media (max-width: 560px) {
+    .page-wrap { padding: 0 18px; }
+    .tabs { top: 10px; padding: 3px 6px; }
+    .content-section { padding: 95px 0 24px; }
+    .username { font-size: 2rem; }
+    .avatar { width: 92px; height: 92px; }
+    .site-footer { margin: 70px 0 110px; }
+}

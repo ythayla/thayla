@@ -1,46 +1,40 @@
-function startExperience() {
-    var overlay = document.getElementById('overlay');
-    var content = document.getElementById('content');
-    var toggle = document.getElementById('view-toggle');
-    var views = document.getElementById('widget-views');
-    var spotify = document.getElementById('widget-spotify');
-
-    overlay.style.opacity = '0';
-    overlay.style.pointerEvents = 'none';
-    setTimeout(function() { overlay.style.display = 'none'; }, 500);
-
-    content.style.display = 'block';
-    setTimeout(function() {
-        content.style.opacity = '1';
-        if (views) views.classList.add('active');
-        if (spotify) spotify.classList.add('active');
-    }, 80);
-
-    if (toggle) toggle.classList.add('active');
-}
-
+/* navegacao por scroll: rola ate a secao, revela ao entrar e marca no menu */
 (function() {
-    var tabs = document.querySelectorAll('.tab');
-    var sections = document.querySelectorAll('.content-section');
-    if (!tabs.length) return;
+    var abas   = document.querySelectorAll('.tab');
+    var secoes = document.querySelectorAll('.content-section');
+    if (!abas.length) return;
 
-    tabs.forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            var target = tab.getAttribute('data-page');
-            tabs.forEach(function(t) { t.classList.remove('active'); });
-            sections.forEach(function(s) { s.classList.remove('active'); });
-            tab.classList.add('active');
-            var el = document.getElementById(target);
-            if (el) el.classList.add('active');
-            history.replaceState(null, '', '#' + target);
+    abas.forEach(function(aba) {
+        aba.addEventListener('click', function() {
+            var alvo = document.getElementById(aba.getAttribute('data-page'));
+            if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
-    var hash = window.location.hash.replace('#', '');
-    if (hash) {
-        var t = document.querySelector('.tab[data-page="' + hash + '"]');
-        if (t) t.click();
+    if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entradas) {
+            entradas.forEach(function(en) {
+                if (en.isIntersecting) {
+                    en.target.classList.add('on');
+                    obs.unobserve(en.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        secoes.forEach(function(s) { obs.observe(s); });
+    } else {
+        secoes.forEach(function(s) { s.classList.add('on'); });
     }
+
+    function espia() {
+        var y = window.scrollY + 170;
+        var atual = '';
+        secoes.forEach(function(s) { if (s.offsetTop <= y) atual = s.id; });
+        abas.forEach(function(a) {
+            a.classList.toggle('active', a.getAttribute('data-page') === atual);
+        });
+    }
+    window.addEventListener('scroll', espia, { passive: true });
+    espia();
 })();
 
 var uiHidden = false;
@@ -112,21 +106,24 @@ function copyName(text) {
 })();
 
 (function() {
+    /* avatar das amigas: 1) link manual (data-avatar) 2) lanyard 3) inicial bonita */
     var avatars = document.querySelectorAll('.friend-avatar[data-discord-id]');
     if (!avatars.length) return;
 
-    avatars.forEach(function(img) {
-        var id = img.getAttribute('data-discord-id');
-        var fallback = img.getAttribute('data-fallback') || '?';
-
-        img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36">' +
-            '<rect width="36" height="36" fill="rgba(255,255,255,0.05)" rx="18"/>' +
-            '<text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" ' +
-            'fill="#aaa" font-family="Inter, sans-serif" font-size="14" font-weight="600">' +
+    function inicial(fallback) {
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72">' +
+            '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+            '<stop offset="0" stop-color="#232328"/><stop offset="1" stop-color="#141418"/>' +
+            '</linearGradient></defs>' +
+            '<rect width="72" height="72" rx="36" fill="url(#g)"/>' +
+            '<text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" ' +
+            'fill="#c9a86a" font-family="Inter, sans-serif" font-size="26" font-weight="600">' +
             fallback + '</text></svg>'
         );
+    }
 
+    function porLanyard(img, id) {
         fetch('https://api.lanyard.rest/v1/users/' + id)
             .then(function(r) { return r.json(); })
             .then(function(res) {
@@ -134,9 +131,23 @@ function copyName(text) {
                 var u = res.data.discord_user;
                 if (!u || !u.avatar) return;
                 var ext = u.avatar.startsWith('a_') ? 'gif' : 'png';
-                img.src = 'https://cdn.discordapp.com/avatars/' + u.id + '/' + u.avatar + '.' + ext + '?size=128';
+                img.src = 'https://cdn.discordapp.com/avatars/' + id + '/' + u.avatar + '.' + ext + '?size=128';
             })
             .catch(function() {});
+    }
+
+    avatars.forEach(function(img) {
+        var id = img.getAttribute('data-discord-id');
+        var fallback = img.getAttribute('data-fallback') || '?';
+        var manual = img.getAttribute('data-avatar');
+
+        img.src = inicial(fallback);
+        if (manual) {
+            img.src = manual;
+            img.onerror = function() { porLanyard(img, id); };
+        } else {
+            porLanyard(img, id);
+        }
     });
 })();
 

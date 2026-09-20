@@ -16,11 +16,7 @@
 </head>
 <body>
 
-<div id="overlay" onclick="startExperience()">
-    <div class="click-text">entrar</div>
-</div>
-
-<div id="view-toggle" title="esconder interface">
+<div id="view-toggle" class="active" title="esconder interface">
     <i class="fas fa-eye" id="view-icon"></i>
 </div>
 
@@ -36,22 +32,23 @@
                     <span id="status-text">carregando...</span>
                 </div>
             </div>
+            <div class="hero-desce"><span>desce</span><i class="fas fa-chevron-down"></i></div>
         </header>
 
         <nav class="tabs">
             <button class="tab active" data-page="about">sobre</button>
             <button class="tab" data-page="musica">música</button>
-            <button class="tab" data-page="friends">amigas</button>
+            <button class="tab" data-page="friends">pessoas</button>
             <button class="tab" data-page="contact">contato</button>
-            <button class="tab" data-page="extra">+</button>
+            <button class="tab" data-page="extra">mais</button>
         </nav>
 
-        <section id="about" class="content-section active">
+        <section id="about" class="content-section revela" data-rotulo="sobre">
             <p>oi! eu sou a <strong>thay</strong>.</p>
             <p class="muted">esse é meu cantinho na internet. um lugar pequeno onde eu guardo as coisas que eu gosto.</p>
         </section>
 
-        <section id="friends" class="content-section">
+        <section id="friends" class="content-section revela" data-rotulo="pessoas">
             <p class="muted">pessoas que fazem meu dia melhor.</p>
             <ul class="friend-list">
                 <li>
@@ -78,7 +75,7 @@
             </ul>
         </section>
 
-        <section id="contact" class="content-section">
+        <section id="contact" class="content-section revela" data-rotulo="onde me achar">
             <p class="muted">onde me achar.</p>
 
             <ul class="link-list">
@@ -128,7 +125,7 @@
             </div>
         </section>
 
-        <section id="musica" class="content-section">
+        <section id="musica" class="content-section revela" data-rotulo="musica">
             <div class="gal-cabeca">
                 <span class="gal-estrela">&#9670;</span>
                 <span class="gal-nome-secao">recent plays</span>
@@ -158,7 +155,7 @@
             <audio id="gal-audio" preload="none"></audio>
         </section>
 
-        <section id="extra" class="content-section">
+        <section id="extra" class="content-section revela" data-rotulo="mais">
             <p>mais um pouco sobre mim.</p>
             <p class="muted">
                 eu passo a maior parte do tempo ouvindo música. meu gosto é bem misturado —
@@ -190,7 +187,7 @@
 
 <div id="toast">copiado</div>
 
-<div id="widget-views" class="widget-views">
+<div id="widget-views" class="widget-views active">
     <div class="wv-header">
         <span class="wv-label">Views</span>
         <span class="wv-count" id="wv-count" hidden>—</span>
@@ -198,7 +195,7 @@
     <div class="wv-chibis" id="wv-chibis"></div>
 </div>
 
-<div id="widget-spotify" class="widget-spotify">
+<div id="widget-spotify" class="widget-spotify active">
     <div class="ws-cover" id="ws-cover"></div>
     <div class="ws-info">
         <strong id="ws-song">nada tocando</strong>
