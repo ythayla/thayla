@@ -141,38 +141,110 @@ function copyName(text) {
 })();
 
 (function() {
-    var countEl = document.getElementById('wv-count');
-    var chibisEl = document.getElementById('wv-chibis');
-    if (!countEl || !chibisEl) return;
+    /* contador de visitas: abacus.jasoncameron.dev (CORS liberado) + um gif por digito.
+       /hit/ conta uma vez por aba; /get/ so le, para nao inflar o numero. */
+    var API         = 'https://abacus.jasoncameron.dev';
+    var NAMESPACE   = 'ythayla.vercel.app';
+    var CHAVE       = 'visitas';
+    var DIGITO_PATH = 'source/views/';
+    var SESSION_KEY = 'ythay-contou';
 
-    function renderNumber(num) {
-        var str = String(num);
-        chibisEl.innerHTML = '';
-        for (var i = 0; i < str.length; i++) {
-            var digit = str[i];
-            var img = document.createElement('img');
-            img.src = 'source/views/' + digit + '.gif';
-            img.alt = digit;
-            chibisEl.appendChild(img);
+    var countEl  = document.getElementById('wv-count');
+    var chibisEl = document.getElementById('wv-chibis');
+    if (!chibisEl) return;
+
+    var mostrando = null;
+
+    function deveContar() {
+        try {
+            if (sessionStorage.getItem(SESSION_KEY)) return false;
+            sessionStorage.setItem(SESSION_KEY, '1');
+            return true;
+        } catch (e) {
+            return true;   /* storage bloqueado (modo privado): cada carregamento conta */
         }
     }
 
-    function update() {
-        fetch('https://api.counterapi.dev/v1/ythayla/thayla-site/up')
-            .then(function(r) { return r.json(); })
-            .then(function(d) {
-                if (d && typeof d.count !== 'undefined') {
-                    countEl.textContent = d.count;
-                    renderNumber(d.count);
-                }
+    function criaDigito(digito) {
+        var img = document.createElement('img');
+        img.src = DIGITO_PATH + digito + '.gif';
+        img.alt = digito;
+        img.dataset.digito = digito;
+        img.className = 'pop';
+        return img;
+    }
+
+    function trocaDigito(img, digito) {
+        if (img.dataset.digito === digito) return;
+        img.dataset.digito = digito;
+        img.src = DIGITO_PATH + digito + '.gif';
+        img.alt = digito;
+        img.classList.remove('pop');
+        void img.offsetWidth;          /* reinicia a animacao */
+        img.classList.add('pop');
+    }
+
+    function renderNumber(valor) {
+        var texto = String(valor);
+        if (texto === mostrando) return;
+        mostrando = texto;
+
+        var atual = chibisEl.children;
+        if (atual.length !== texto.length) {
+            while (chibisEl.firstChild) chibisEl.removeChild(chibisEl.firstChild);
+            for (var i = 0; i < texto.length; i++) {
+                chibisEl.appendChild(criaDigito(texto.charAt(i)));
+            }
+        } else {
+            for (var j = 0; j < texto.length; j++) {
+                trocaDigito(atual[j], texto.charAt(j));
+            }
+        }
+
+        if (countEl) {
+            countEl.textContent = texto;
+            countEl.hidden = true;     /* os gifs passam a ser o contador visivel */
+        }
+        chibisEl.setAttribute('aria-label', texto + ' visitas');
+    }
+
+    function falhou() {
+        if (!countEl) return;
+        countEl.textContent = '\u2014';   /* travessao */
+        countEl.hidden = false;
+    }
+
+    function pede(rota) {
+        return fetch(API + '/' + rota + '/' + NAMESPACE + '/' + CHAVE, { cache: 'no-store' })
+            .then(function(r) {
+                if (!r.ok) throw new Error('http ' + r.status);
+                return r.json();
             })
-            .catch(function() {
-                countEl.textContent = '—';
+            .then(function(d) {
+                if (d && typeof d.value === 'number') return d.value;
+                throw new Error('resposta sem valor');
             });
     }
 
-    update();
-    setInterval(update, 60000);
+    function soLe() {
+        return pede('get').catch(function() { return null; });
+    }
+
+    (deveContar() ? pede('hit') : soLe())
+        .then(function(valor) {
+            if (valor === null) falhou(); else renderNumber(valor);
+        })
+        .catch(function() {
+            soLe().then(function(valor) {
+                if (valor === null) falhou(); else renderNumber(valor);
+            });
+        });
+
+    setInterval(function() {
+        soLe().then(function(valor) {
+            if (valor !== null) renderNumber(valor);
+        });
+    }, 60000);
 })();
 
 (function() {
