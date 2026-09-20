@@ -321,8 +321,6 @@ function copyName(text) {
 
     var secao     = document.getElementById('musica');
     var palco     = document.querySelector('.gal-palco');
-    var btEsq     = document.getElementById('gal-esq');
-    var btDir     = document.getElementById('gal-dir');
     var btTocar   = document.getElementById('gal-tocar');
     var icone     = document.getElementById('gal-icone');
     var audio     = document.getElementById('gal-audio');
@@ -359,19 +357,30 @@ function copyName(text) {
         return (f.artista + ' ' + f.nome).toLowerCase();
     }
 
-    function pinta() {
+    function pinta(base) {
+        /* transformacoes calculadas ao vivo: aceita indice fracionario durante o arrasto */
+        var f = (typeof base === 'number') ? base : atual;
         var n = faixas.length;
         var itens = galEl.children;
         for (var i = 0; i < itens.length; i++) {
-            var d = i - atual;
-            /* vizinhanca circular: assim sempre tem capa dos dois lados */
+            var d = i - f;
             if (n > 4) {
                 if (d > n / 2) d -= n;
                 if (d < -n / 2) d += n;
             }
-            var v = 'off';
-            if (d === 0 || d === -1 || d === 1 || d === -2 || d === 2) v = String(d);
-            itens[i].dataset.dist = v;
+            var ad = Math.abs(d);
+            var el = itens[i];
+            if (ad > 2.4) {
+                el.style.opacity = '0';
+                el.style.zIndex = '1';
+                el.style.pointerEvents = 'none';
+                continue;
+            }
+            el.style.transform = 'translateX(' + (d * 88).toFixed(1) + 'px) rotateY(' +
+                                 (-d * 44).toFixed(1) + 'deg) scale(' + (1.15 - 0.33 * ad).toFixed(3) + ')';
+            el.style.opacity = Math.max(0.07, 1 - 0.45 * ad).toFixed(3);
+            el.style.zIndex = String(10 - Math.round(ad * 2));
+            el.style.pointerEvents = 'auto';
         }
     }
 
@@ -447,9 +456,15 @@ function copyName(text) {
             item.className = 'gal-item';
             item.title = f.artista + ' - ' + f.nome;
             var img = document.createElement('img');
+            img.className = 'capa';
             img.src = f.img;
             img.alt = f.nome;
             item.appendChild(img);
+            var espelho = document.createElement('img');
+            espelho.className = 'gal-espelho';
+            espelho.src = f.img;
+            espelho.alt = '';
+            item.appendChild(espelho);
             item.addEventListener('click', function() {
                 if (i === atual) alterna(); else troca(i);
             });
@@ -461,8 +476,6 @@ function copyName(text) {
         carregaPrevia();
     }
 
-    btEsq.addEventListener('click', function() { troca(atual - 1); });
-    btDir.addEventListener('click', function() { troca(atual + 1); });
     btTocar.addEventListener('click', alterna);
 
     audio.addEventListener('play', function() {
@@ -494,18 +507,37 @@ function copyName(text) {
         if (e.key === ' ') { e.preventDefault(); alterna(); }
     });
 
-    var xInicio = null;
-    function solta(xFim) {
-        if (xInicio === null) return;
-        var dx = xFim - xInicio;
-        if (Math.abs(dx) > 40) troca(atual + (dx < 0 ? 1 : -1));
-        xInicio = null;
+    /* arrastar com o mouse ou o dedo: as capas seguem a mao */
+    var arrastando = false;
+    var xIni = 0;
+    var frac = 0;
+
+    function comeca(e) {
+        arrastando = true;
+        xIni = e.clientX;
+        frac = atual;
+        galEl.classList.add('arrastando');
+    }
+    function move(e) {
+        if (!arrastando) return;
+        frac = atual - (e.clientX - xIni) / 88;
+        pinta(frac);
+    }
+    function solta() {
+        if (!arrastando) return;
+        arrastando = false;
+        galEl.classList.remove('arrastando');
+        var n = Math.round(frac);
+        if (n < 0) n = faixas.length - 1;
+        if (n >= faixas.length) n = 0;
+        if (n === atual) { pinta(); return; }
+        troca(n);
     }
     if (palco) {
-        palco.addEventListener('touchstart', function(e) { xInicio = e.touches[0].clientX; }, { passive: true });
-        palco.addEventListener('touchend', function(e) { solta(e.changedTouches[0].clientX); });
-        palco.addEventListener('mousedown', function(e) { xInicio = e.clientX; });
-        palco.addEventListener('mouseup', function(e) { solta(e.clientX); });
+        palco.addEventListener('pointerdown', comeca);
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', solta);
+        document.addEventListener('pointercancel', solta);
     }
 
     fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + USER +
