@@ -796,6 +796,11 @@ body::after { background: none; }
     mask-image: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.55) 100%);
 }
 .gal.arrastando .gal-item { transition: none; }
+.gal-palco, .gal-palco img {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
 
 @media (max-width: 560px) {
     .gal-palco { height: 184px; }

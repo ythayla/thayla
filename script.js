@@ -507,10 +507,12 @@ function copyName(text) {
         if (e.key === ' ') { e.preventDefault(); alterna(); }
     });
 
-    /* arrastar com o mouse ou o dedo: as capas seguem a mao */
+    /* arrastar com o mouse ou o dedo: as capas seguem a mao.
+       clique continua igual: toque curto = clica, movimento = arrasta */
     var arrastando = false;
     var xIni = 0;
     var frac = 0;
+    var arrasteFim = 0;
 
     function comeca(e) {
         arrastando = true;
@@ -521,15 +523,20 @@ function copyName(text) {
     function move(e) {
         if (!arrastando) return;
         frac = atual - (e.clientX - xIni) / 88;
+        if (Math.abs(e.clientX - xIni) > 6) galEl.classList.add('moveu');
         pinta(frac);
     }
     function solta() {
         if (!arrastando) return;
         arrastando = false;
         galEl.classList.remove('arrastando');
+        var foiArrastao = galEl.classList.contains('moveu');
+        galEl.classList.remove('moveu');
+        if (foiArrastao) arrasteFim = Date.now();
         var n = Math.round(frac);
         if (n < 0) n = faixas.length - 1;
         if (n >= faixas.length) n = 0;
+        if (!foiArrastao) { pinta(); return; }   /* clique puro: devolve exato e o click decide */
         if (n === atual) { pinta(); return; }
         troca(n);
     }
@@ -538,7 +545,16 @@ function copyName(text) {
         document.addEventListener('pointermove', move);
         document.addEventListener('pointerup', solta);
         document.addEventListener('pointercancel', solta);
+        galEl.addEventListener('dragstart', function(e) { e.preventDefault(); });
     }
+
+    /* clique que vem logo depois de um arraste: ignora (click-after-drag) */
+    galEl.addEventListener('click', function(e) {
+        if (Date.now() - arrasteFim < 600) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+    }, true);
 
     fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + USER +
           '&api_key=' + KEY + '&format=json&limit=' + MAX)
