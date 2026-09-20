@@ -767,6 +767,88 @@ body::after { background: none; }
 }
 .views-card .wv-chibis img { height: 66px; }
 
+/* ===== secao "eu": cartao do discord + views lado a lado ===== */
+.eu-linha {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+}
+.discord-card {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+}
+.dc-foto { position: relative; flex-shrink: 0; }
+.dc-foto img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #141418;
+    display: block;
+}
+.dc-dot {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 3px solid #0a0a0c;
+    background: #555;
+}
+.dc-dot.online { background: #6a9e6b; }
+.dc-dot.idle { background: #b8883d; }
+.dc-dot.dnd { background: #a85252; }
+.dc-dot.offline { background: #555; }
+.dc-info { min-width: 0; flex: 1; }
+.dc-linha-nome {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+.dc-linha-nome strong {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dc-badges { display: inline-flex; align-items: center; gap: 5px; }
+.dc-badge { font-size: 0.78rem; color: #9a9aa2; }
+.dc-status {
+    display: block;
+    margin-top: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#eu .views-card { flex: 0 0 auto; margin: 0; padding: 16px 20px 18px; }
+
+@media (max-width: 560px) {
+    .eu-linha { flex-direction: column; }
+    .discord-card { padding: 15px 17px; }
+    .dc-foto img { width: 62px; height: 62px; }
+    #eu .views-card {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    #eu .views-card .wv-chibis { flex-direction: row !important; }
+}
+
 @media (max-width: 560px) {
     .views-card { padding: 16px 24px 20px; }
     .views-card .wv-chibis img { height: 52px; }

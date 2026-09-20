@@ -152,6 +152,100 @@ function copyName(text) {
 })();
 
 (function() {
+    /* cartao de presenca do discord: foto + nome + badges + status, tudo ao vivo */
+    var ID = '947175002007015484';
+
+    var imgAvatar = document.getElementById('dc-avatar');
+    var elNome    = document.getElementById('dc-nome');
+    var elBadges  = document.getElementById('dc-badges');
+    var elStatus  = document.getElementById('dc-status');
+    var elDot     = document.getElementById('dc-dot');
+    if (!imgAvatar) return;
+
+    var CORES = {
+        HYPE_SQUAD: '#f0c040',
+        NITRO: '#f0c0d8',
+        EARLY_SUPPORTER: '#f0c0a0',
+        BUG_HUNTER_1: '#b0d890',
+        BUG_HUNTER_2: '#c0e8a0',
+        HYPE_BALANCE: '#f06868',
+        HYPE_BRAVERY: '#c080e8',
+        HYPE_BRILLIANCE: '#80d858',
+        ACTIVE_DEVELOPER: '#68c8e8'
+    };
+
+    function textoAtividade(d) {
+        var acts = d.activities || [];
+        for (var i = 0; i < acts.length; i++) {
+            var a = acts[i];
+            if (a.type === 2) return 'ouvindo ' + (a.details || a.name);
+            if (a.type === 0) return 'jogando ' + a.name;
+            if (a.type === 1) return 'em live: ' + a.name;
+        }
+        var rotulos = { online: 'online', idle: 'ausente', dnd: 'ocupada', offline: 'offline' };
+        return rotulos[d.discord_status] || 'offline';
+    }
+
+    function render(d) {
+        var u = d.discord_user || {};
+
+        if (u.username && elNome) elNome.textContent = u.username;
+
+        if (u.avatar && imgAvatar) {
+            var ext = u.avatar.indexOf('a_') === 0 ? 'gif' : 'png';
+            var nova = 'https://cdn.discordapp.com/avatars/' + ID + '/' + u.avatar + '.' + ext + '?size=160';
+            if (imgAvatar.getAttribute('src') !== nova) imgAvatar.setAttribute('src', nova);
+        }
+
+        if (elBadges) {
+            var nomes = (d.discord_user && d.discord_user.public_flags_array) || d.public_flags_array || [];
+            elBadges.innerHTML = '';
+            nomes.forEach(function(nomeBase) {
+                var chave = String(nomeBase).toUpperCase();
+                var s = document.createElement('i');
+                s.className = 'fas fa-gem dc-badge';
+                s.title = String(nomeBase).toLowerCase().replace(/_/g, ' ');
+                if (chave === 'HOUSE_BRAVERY' || chave === 'HYPE_BRAVERY') s.className = 'fas fa-shield-halved dc-badge';
+                if (chave === 'HOUSE_BRILLIANCE' || chave === 'HYPE_BRILLIANCE') s.className = 'fas fa-bolt dc-badge';
+                if (chave === 'HOUSE_BALANCE' || chave === 'HYPE_BALANCE') s.className = 'fas fa-scale-balanced dc-badge';
+                if (chave === 'HYPE_SQUAD' || chave.indexOf('HYPE_') === 0) s.style.color = CORES.HYPE_SQUAD;
+                if (chave === 'NITRO' || chave.indexOf('PREMIUM') >= 0 || chave.indexOf('NITRO') >= 0) s.style.color = CORES.NITRO;
+                if (chave === 'EARLY_SUPPORTER') s.style.color = CORES.EARLY_SUPPORTER;
+                if (chave.indexOf('BUG_HUNTER') === 0) s.style.color = CORES.BUG_HUNTER_1;
+                if (chave === 'ACTIVE_DEVELOPER') s.style.color = CORES.ACTIVE_DEVELOPER;
+                elBadges.appendChild(s);
+            });
+            if (d.active_on_discord_desktop || d.active_on_discord_mobile || d.active_on_discord_web) {
+                var pc = document.createElement('i');
+                pc.className = 'fas fa-desktop dc-badge';
+                pc.title = 'no discord agora';
+                pc.style.color = '#c9a86a';
+                elBadges.appendChild(pc);
+            }
+        }
+
+        if (elStatus) elStatus.textContent = textoAtividade(d);
+
+        var estado = d.discord_status || 'offline';
+        if (elDot) elDot.className = 'dc-dot ' + estado;
+        var pontoHeroi = document.getElementById('status-dot');
+        if (pontoHeroi) pontoHeroi.className = 'dot ' + estado;
+    }
+
+    function atualiza() {
+        fetch('https://api.lanyard.rest/v1/users/' + ID, { cache: 'no-store' })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (!res.success) return;
+                render(res.data);
+                setTimeout(atualiza, 45000);
+            })
+            .catch(function() { setTimeout(atualiza, 60000); });
+    }
+    atualiza();
+})();
+
+(function() {
     /* contador de visitas: abacus.jasoncameron.dev (CORS liberado) + um gif por digito.
        /hit/ conta uma vez por aba; /get/ so le, para nao inflar o numero. */
     var API         = 'https://abacus.jasoncameron.dev';
