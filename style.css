@@ -887,6 +887,31 @@ body::after { background: none; }
 .site-flags { margin-top: 28px; text-align: center; flex-basis: 100%; }
 .site-flags img { width: 184px; height: auto; display: inline-block; opacity: 0.92; }
 
+/* ===== estampas 88x31 ===== */
+.selos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+}
+.selo {
+    height: 31px;
+    width: auto;
+    border-radius: 3px;
+    image-rendering: auto;
+    display: block;
+    transition: transform 0.15s ease;
+}
+.selo:hover {
+    transform: scale(1.09) translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 560px) {
+    .selo { height: 27px; }
+    .selos { gap: 5px; }
+}
+
 @media (max-width: 560px) {
     .gal-palco { height: 184px; }
     .site-flags img { width: 150px; }
