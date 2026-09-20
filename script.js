@@ -178,12 +178,37 @@ function copyName(text) {
         var acts = d.activities || [];
         for (var i = 0; i < acts.length; i++) {
             var a = acts[i];
-            if (a.type === 2) return 'ouvindo ' + (a.details || a.name);
-            if (a.type === 0) return 'jogando ' + a.name;
-            if (a.type === 1) return 'em live: ' + a.name;
+            if (a.type === 2 && a.name) return 'ouvindo ' + (a.details || a.name) + (a.state ? ' — ' + a.state : '');
+            if (a.type === 0) return 'jogando ' + (a.name || 'algo');
+            if (a.type === 1) return 'em live: ' + (a.name || 'twitch');
         }
-        var rotulos = { online: 'online', idle: 'ausente', dnd: 'ocupada', offline: 'offline' };
-        return rotulos[d.discord_status] || 'offline';
+        var r2 = { online: 'online', idle: 'ausente', dnd: 'ocupada', offline: 'offline' };
+        return r2[d.discord_status] || 'offline';
+    }
+
+    function flagsParaBadges(flagsNum, u, d) {
+        var f = Number(flagsNum) || 0;
+        var bad = [];
+        if (f & (1 << 0))  bad.push(['fas fa-fire',      '#b0d890', 'staff']);
+        if (f & (1 << 1))  bad.push(['fas fa-crown',     '#f0c040', 'partner']);
+        if (f & (1 << 2))  bad.push(['fas fa-gem',       '#f0a0c0', 'partner ou early supporter']);
+        if (f & (1 << 3))  bad.push(['fas fa-fire',      '#f0c040', 'hype squad events']);
+        if (f & (1 << 6))  bad.push(['fas fa-gem',       '#f0a0c0', 'hype squad balance']);
+        if (f & (1 << 7))  bad.push(['fas fa-gem',       '#f0c040', 'hype squad bravery']);
+        if (f & (1 << 8))  bad.push(['fas fa-gem',       '#80d858', 'hype squad brilliance']);
+        if (f & (1 << 9))  bad.push(['fas fa-code-branch','#68c8e8','early supporter']);
+        if (f & (1 << 10)) bad.push(['fas fa-code-branch','#b0d890', 'bug hunter 1']);
+        if (f & (1 << 14)) bad.push(['fas fa-code-branch','#c0e8a0', 'bug hunter 2']);
+        if (f & (1 << 17)) bad.push(['fas fa-star',      '#68c8e8', 'developer ativo']);
+        if (f & (1 << 20)) bad.push(['fas fa-shield-halved','#b0d890','mod program']);
+        if (u.primary_guild) bad.push(['fas fa-tag', '#c9a86a', 'tag de servidor']);
+        if (u.avatar_decoration_data) bad.push(['fas fa-palette', '#f0c0d8', 'decoracao no avatar']);
+        if (u.collectibles) bad.push(['fas fa-gift', '#b0d890', 'colecionaveis']);
+        if (d.listening_to_spotify) bad.push(['fab fa-spotify', '#1db954', 'spotify tocando']);
+        if (d.active_on_discord_desktop) bad.push(['fas fa-desktop', '#c9a86a', 'discord no pc']);
+        if (d.active_on_discord_mobile) bad.push(['fas fa-mobile-screen', '#c9a86a', 'discord no celular']);
+        if (d.active_on_discord_web) bad.push(['fas fa-globe', '#c9a86a', 'discord no navegador']);
+        return bad;
     }
 
     function render(d) {
@@ -198,30 +223,14 @@ function copyName(text) {
         }
 
         if (elBadges) {
-            var nomes = (d.discord_user && d.discord_user.public_flags_array) || d.public_flags_array || [];
             elBadges.innerHTML = '';
-            nomes.forEach(function(nomeBase) {
-                var chave = String(nomeBase).toUpperCase();
+            flagsParaBadges(u.public_flags, u, d).forEach(function(b) {
                 var s = document.createElement('i');
-                s.className = 'fas fa-gem dc-badge';
-                s.title = String(nomeBase).toLowerCase().replace(/_/g, ' ');
-                if (chave === 'HOUSE_BRAVERY' || chave === 'HYPE_BRAVERY') s.className = 'fas fa-shield-halved dc-badge';
-                if (chave === 'HOUSE_BRILLIANCE' || chave === 'HYPE_BRILLIANCE') s.className = 'fas fa-bolt dc-badge';
-                if (chave === 'HOUSE_BALANCE' || chave === 'HYPE_BALANCE') s.className = 'fas fa-scale-balanced dc-badge';
-                if (chave === 'HYPE_SQUAD' || chave.indexOf('HYPE_') === 0) s.style.color = CORES.HYPE_SQUAD;
-                if (chave === 'NITRO' || chave.indexOf('PREMIUM') >= 0 || chave.indexOf('NITRO') >= 0) s.style.color = CORES.NITRO;
-                if (chave === 'EARLY_SUPPORTER') s.style.color = CORES.EARLY_SUPPORTER;
-                if (chave.indexOf('BUG_HUNTER') === 0) s.style.color = CORES.BUG_HUNTER_1;
-                if (chave === 'ACTIVE_DEVELOPER') s.style.color = CORES.ACTIVE_DEVELOPER;
+                s.className = b[0] + ' dc-badge';
+                s.style.color = b[1];
+                s.title = b[2];
                 elBadges.appendChild(s);
             });
-            if (d.active_on_discord_desktop || d.active_on_discord_mobile || d.active_on_discord_web) {
-                var pc = document.createElement('i');
-                pc.className = 'fas fa-desktop dc-badge';
-                pc.title = 'no discord agora';
-                pc.style.color = '#c9a86a';
-                elBadges.appendChild(pc);
-            }
         }
 
         if (elStatus) elStatus.textContent = textoAtividade(d);
