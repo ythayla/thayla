@@ -145,7 +145,7 @@ function copyName(text) {
        /hit/ conta uma vez por aba; /get/ so le, para nao inflar o numero. */
     var API         = 'https://abacus.jasoncameron.dev';
     var NAMESPACE   = 'ythayla.vercel.app';
-    var CHAVE       = 'visitas';
+    var CHAVE       = 'visitas-v3';   /* chave nova = contador comeca zerado */
     var DIGITO_PATH = 'source/views/';
     var SESSION_KEY = 'ythay-contou';
 
@@ -294,4 +294,229 @@ function copyName(text) {
     }
     update();
     setInterval(update, 30000);
+})();
+
+(function() {
+    /* galeria "recent plays": ultimas musicas do last.fm + previa de 30s via iTunes */
+    var USER = 'ythayla';
+    var KEY  = '4b3809d023a1908d38f0443164318b4e';
+    var MAX  = 12;
+
+    var galEl = document.getElementById('gal');
+    if (!galEl) return;
+
+    var secao     = document.getElementById('musica');
+    var palco     = document.querySelector('.gal-palco');
+    var btEsq     = document.getElementById('gal-esq');
+    var btDir     = document.getElementById('gal-dir');
+    var btTocar   = document.getElementById('gal-tocar');
+    var icone     = document.getElementById('gal-icone');
+    var audio     = document.getElementById('gal-audio');
+    var elTempo   = document.getElementById('gal-tempo-atual');
+    var barra     = document.getElementById('gal-barra');
+    var preenche  = document.getElementById('gal-preenche');
+    var elMusica  = document.getElementById('gal-musica');
+    var elArtista = document.getElementById('gal-artista');
+
+    var faixas  = [];
+    var atual   = 0;
+    var previas = {};      /* cache: "artista titulo" -> url da previa */
+    var pedido  = null;
+
+    function mmss(seg) {
+        if (!isFinite(seg) || seg < 0) seg = 0;
+        var m = Math.floor(seg / 60);
+        var s = Math.floor(seg % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function quando(uts) {
+        if (!uts) return 'tocando agora';
+        var dif = Math.floor(Date.now() / 1000) - uts;
+        if (dif < 60) return 'agora mesmo';
+        var m = Math.floor(dif / 60);
+        if (m < 60) return m + 'min atrás';
+        var h = Math.floor(m / 60);
+        if (h < 24) return h + 'h atrás';
+        return Math.floor(h / 24) + 'd atrás';
+    }
+
+    function chaveDe(f) {
+        return (f.artista + ' ' + f.nome).toLowerCase();
+    }
+
+    function pinta() {
+        var n = faixas.length;
+        var itens = galEl.children;
+        for (var i = 0; i < itens.length; i++) {
+            var d = i - atual;
+            /* vizinhanca circular: assim sempre tem capa dos dois lados */
+            if (n > 4) {
+                if (d > n / 2) d -= n;
+                if (d < -n / 2) d += n;
+            }
+            var v = 'off';
+            if (d === 0 || d === -1 || d === 1 || d === -2 || d === 2) v = String(d);
+            itens[i].dataset.dist = v;
+        }
+    }
+
+    function legenda() {
+        var f = faixas[atual];
+        if (!f) return;
+        elMusica.textContent  = f.nome;
+        elArtista.textContent = f.artista + ' · ' + f.quando;
+    }
+
+    function parar() {
+        audio.pause();
+        try { audio.currentTime = 0; } catch (e) {}
+        preenche.style.width = '0%';
+        elTempo.textContent  = '0:00';
+        btTocar.classList.remove('tocando');
+        icone.className = 'fas fa-play';
+    }
+
+    function carregaPrevia() {
+        var f = faixas[atual];
+        if (!f) return;
+        var k = chaveDe(f);
+
+        if (previas[k]) {
+            if (audio.getAttribute('src') !== previas[k]) audio.src = previas[k];
+            return;
+        }
+
+        if (pedido) { try { pedido.abort(); } catch (e) {} }
+        var termo = encodeURIComponent(f.artista + ' ' + f.nome);
+        pedido = fetch('https://itunes.apple.com/search?term=' + termo +
+                       '&media=music&entity=song&limit=1', { cache: 'force-cache' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                var t = d.results && d.results[0];
+                if (!t || !t.previewUrl) return;
+                previas[k] = t.previewUrl;
+                if (faixas[atual] && chaveDe(faixas[atual]) === k) audio.src = t.previewUrl;
+            })
+            .catch(function() {});
+    }
+
+    function troca(indice) {
+        if (!faixas.length) return;
+        var n = indice;
+        if (n < 0) n = faixas.length - 1;
+        if (n >= faixas.length) n = 0;
+        atual = n;
+        parar();
+        pinta();
+        legenda();
+        carregaPrevia();
+    }
+
+    function alterna() {
+        if (!audio.getAttribute('src')) return;
+        if (audio.paused) audio.play().catch(function() {});
+        else audio.pause();
+    }
+    function monta(lista) {
+        faixas = lista;
+        galEl.innerHTML = '';
+        if (!lista.length) {
+            var v = document.createElement('div');
+            v.className = 'gal-vazio';
+            v.textContent = 'nada por aqui ainda';
+            galEl.appendChild(v);
+            return;
+        }
+        lista.forEach(function(f, i) {
+            var item = document.createElement('div');
+            item.className = 'gal-item';
+            item.title = f.artista + ' - ' + f.nome;
+            var img = document.createElement('img');
+            img.src = f.img;
+            img.alt = f.nome;
+            item.appendChild(img);
+            item.addEventListener('click', function() {
+                if (i === atual) alterna(); else troca(i);
+            });
+            galEl.appendChild(item);
+        });
+        atual = 0;
+        pinta();
+        legenda();
+        carregaPrevia();
+    }
+
+    btEsq.addEventListener('click', function() { troca(atual - 1); });
+    btDir.addEventListener('click', function() { troca(atual + 1); });
+    btTocar.addEventListener('click', alterna);
+
+    audio.addEventListener('play', function() {
+        btTocar.classList.add('tocando');
+        icone.className = 'fas fa-pause';
+    });
+    audio.addEventListener('pause', function() {
+        btTocar.classList.remove('tocando');
+        icone.className = 'fas fa-play';
+    });
+    audio.addEventListener('timeupdate', function() {
+        var d = audio.duration || 30;
+        preenche.style.width = Math.min(100, (audio.currentTime / d) * 100) + '%';
+        elTempo.textContent = mmss(audio.currentTime);
+    });
+    audio.addEventListener('ended', parar);
+
+    barra.addEventListener('click', function(e) {
+        if (!audio.duration) return;
+        var r = barra.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (!secao || !secao.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft')  troca(atual - 1);
+        if (e.key === 'ArrowRight') troca(atual + 1);
+        if (e.key === ' ') { e.preventDefault(); alterna(); }
+    });
+
+    var xInicio = null;
+    function solta(xFim) {
+        if (xInicio === null) return;
+        var dx = xFim - xInicio;
+        if (Math.abs(dx) > 40) troca(atual + (dx < 0 ? 1 : -1));
+        xInicio = null;
+    }
+    if (palco) {
+        palco.addEventListener('touchstart', function(e) { xInicio = e.touches[0].clientX; }, { passive: true });
+        palco.addEventListener('touchend', function(e) { solta(e.changedTouches[0].clientX); });
+        palco.addEventListener('mousedown', function(e) { xInicio = e.clientX; });
+        palco.addEventListener('mouseup', function(e) { solta(e.clientX); });
+    }
+
+    fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + USER +
+          '&api_key=' + KEY + '&format=json&limit=' + MAX)
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+            var bruto = (d.recenttracks && d.recenttracks.track) || [];
+            monta(bruto.map(function(t) {
+                var img = '';
+                var imgs = t.image || [];
+                for (var i = imgs.length - 1; i >= 0; i--) {
+                    if (imgs[i] && imgs[i]['#text']) { img = imgs[i]['#text']; break; }
+                }
+                return {
+                    nome: t.name || 'desconhecido',
+                    artista: (t.artist && (t.artist['#text'] || t.artist.name)) || 'desconhecido',
+                    img: img,
+                    quando: t.date ? quando(parseInt(t.date.uts, 10)) : 'tocando agora'
+                };
+            }));
+        })
+        .catch(function() {
+            galEl.innerHTML = '';
+            var v = document.createElement('div');
+            v.className = 'gal-vazio';
+            v.textContent = 'nao consegui carregar o last.fm';
+            galEl.appendChild(v);
+        });
 })();

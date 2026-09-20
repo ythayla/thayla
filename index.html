@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co https://lastfm.freetls.fastly.net https://*.fastly.net; media-src 'self' blob: data:; connect-src 'self' https://api.lanyard.rest https://*.lanyard.rest https://ws.audioscrobbler.com https://abacus.jasoncameron.dev; object-src 'none'; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://cdn.discordapp.com https://i.scdn.co https://lastfm.freetls.fastly.net https://*.fastly.net; media-src 'self' blob: data: https://audio-ssl.itunes.apple.com https://*.apple.com; connect-src 'self' https://api.lanyard.rest https://*.lanyard.rest https://ws.audioscrobbler.com https://abacus.jasoncameron.dev https://itunes.apple.com; object-src 'none'; base-uri 'self';">
 <title>ythay</title>
 <meta name="theme-color" content="#1a1a1a">
 <link rel="icon" type="image/png" href="source/superminime.png">
@@ -40,6 +40,7 @@
 
         <nav class="tabs">
             <button class="tab active" data-page="about">sobre</button>
+            <button class="tab" data-page="musica">música</button>
             <button class="tab" data-page="friends">amigues</button>
             <button class="tab" data-page="contact">contato</button>
             <button class="tab" data-page="extra">+</button>
@@ -125,6 +126,36 @@
                     <button onclick="copyName('ythayla')">copiar</button>
                 </div>
             </div>
+        </section>
+
+        <section id="musica" class="content-section">
+            <div class="gal-cabeca">
+                <span class="gal-estrela">&#9670;</span>
+                <span class="gal-nome-secao">recent plays</span>
+                <span class="gal-estrela">&#9670;</span>
+            </div>
+
+            <div class="gal-palco">
+                <button class="gal-seta gal-seta-esq" id="gal-esq" type="button" aria-label="anterior">&#8249;</button>
+                <div class="gal" id="gal"></div>
+                <button class="gal-seta gal-seta-dir" id="gal-dir" type="button" aria-label="proxima">&#8250;</button>
+            </div>
+
+            <div class="gal-player">
+                <button class="gal-tocar" id="gal-tocar" type="button" aria-label="tocar">
+                    <i class="fas fa-play" id="gal-icone"></i>
+                </button>
+                <span class="gal-tempo" id="gal-tempo-atual">0:00</span>
+                <div class="gal-barra" id="gal-barra"><div class="gal-preenche" id="gal-preenche"></div></div>
+                <span class="gal-tempo">0:30</span>
+            </div>
+
+            <div class="gal-legenda">
+                <strong id="gal-musica">carregando...</strong>
+                <span id="gal-artista">last.fm</span>
+            </div>
+
+            <audio id="gal-audio" preload="none"></audio>
         </section>
 
         <section id="extra" class="content-section">
