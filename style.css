@@ -919,9 +919,13 @@ body::after { background: none; }
 }
 
 /* ===== coelhinhos decorando as bordas ===== */
+body { position: relative; }
 .bordas {
-    position: fixed;
-    inset: 0;
+    position: absolute;   /* no fundo do documento, rola junto com a pagina */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
@@ -935,32 +939,32 @@ body::after { background: none; }
     animation: bordaFlutua 9s ease-in-out infinite;
 }
 .borda-deco.b1 {
-    left: -28px; top: 16%;
-    width: 178px; opacity: 0.38;
+    left: 1%; top: 7%;
+    width: 152px; opacity: 0.32;
     transform: rotate(-12deg);
     animation-delay: 0s;
 }
 .borda-deco.b2 {
-    left: -22px; bottom: 14%;
-    width: 132px; opacity: 0.3;
+    right: 1%; top: 14%;
+    width: 152px; opacity: 0.32;
     transform: rotate(9deg) scaleX(-1);
     animation-delay: -3.2s;
 }
 .borda-deco.b3 {
-    right: -30px; top: 38%;
-    width: 164px; opacity: 0.34;
+    left: 0.5%; top: 44%;
+    width: 140px; opacity: 0.28;
     transform: rotate(11deg) scaleX(-1);
     animation-delay: -1.6s;
 }
 .borda-deco.b4 {
-    right: -24px; bottom: 9%;
-    width: 142px; opacity: 0.3;
+    right: 0.5%; top: 56%;
+    width: 140px; opacity: 0.28;
     transform: rotate(-9deg);
     animation-delay: -5.4s;
 }
 /* garota azul recortada (flutuante, sem fundo) */
 .borda-deco.b5 {
-    left: 1%; bottom: 3%;
+    left: 2%; bottom: 6%;
     width: 232px; opacity: 0.96;
     transform: rotate(-6deg);
     animation-delay: -2.4s;
@@ -968,7 +972,7 @@ body::after { background: none; }
 }
 /* personagem de minecraft (yala) recortada flutuante */
 .borda-deco.b6 {
-    right: 2%; top: 5%;
+    right: 2%; bottom: 5%;
     width: 170px; opacity: 0.96;
     transform: rotate(7deg);
     animation-delay: -6.8s;
