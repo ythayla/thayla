@@ -958,17 +958,26 @@ body::after { background: none; }
     transform: rotate(-9deg);
     animation-delay: -5.4s;
 }
+/* garota azul recortada (flutuante, sem fundo) */
 .borda-deco.b5 {
-    left: 6%; top: 4%;
-    width: 96px; opacity: 0.16;
-    transform: rotate(16deg) scaleX(-1);
+    left: 1%; bottom: 3%;
+    width: 232px; opacity: 0.96;
+    transform: rotate(-6deg);
     animation-delay: -2.4s;
+    filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.7));
 }
+/* garota castanha em moldura (estilo polaroid) */
 .borda-deco.b6 {
-    right: 7%; bottom: 34%;
-    width: 104px; opacity: 0.16;
-    transform: rotate(-15deg);
+    right: 2%; top: 5%;
+    width: 150px; opacity: 1;
+    transform: rotate(7deg);
     animation-delay: -6.8s;
+    background: #0d0d11;
+    padding: 9px 9px 26px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.65);
+    filter: none;
 }
 @keyframes bordaFlutua {
     0%, 100% { margin-top: 0; }
