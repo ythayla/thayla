@@ -966,18 +966,13 @@ body::after { background: none; }
     animation-delay: -2.4s;
     filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.7));
 }
-/* garota castanha em moldura (estilo polaroid) */
+/* personagem de minecraft (yala) recortada flutuante */
 .borda-deco.b6 {
     right: 2%; top: 5%;
-    width: 150px; opacity: 1;
+    width: 170px; opacity: 0.96;
     transform: rotate(7deg);
     animation-delay: -6.8s;
-    background: #0d0d11;
-    padding: 9px 9px 26px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.65);
-    filter: none;
+    filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.7));
 }
 @keyframes bordaFlutua {
     0%, 100% { margin-top: 0; }
