@@ -107,7 +107,7 @@ function copyName(text) {
 
 (function() {
     /* avatar das amigas: 1) link manual (data-avatar) 2) lanyard 3) inicial bonita */
-    var avatars = document.querySelectorAll('.friend-avatar[data-discord-id]');
+    var avatars = document.querySelectorAll('.friend-avatar');
     if (!avatars.length) return;
 
     function inicial(fallback) {
@@ -144,8 +144,8 @@ function copyName(text) {
         img.src = inicial(fallback);
         if (manual) {
             img.src = manual;
-            img.onerror = function() { porLanyard(img, id); };
-        } else {
+            if (id) { img.onerror = function() { porLanyard(img, id); }; }
+        } else if (id) {
             porLanyard(img, id);
         }
     });
