@@ -39,7 +39,6 @@
             <button class="tab active" data-page="about">sobre</button>
             <button class="tab" data-page="musica">música</button>
             <button class="tab" data-page="friends">pessoas</button>
-            <button class="tab" data-page="galeria">Galeria</button>
             <button class="tab" data-page="contact">contato</button>
             <button class="tab" data-page="extra">+</button>
             <button class="tab" data-page="selos">estampas</button>
@@ -51,49 +50,56 @@
             <p class="muted">esse é meu cantinho na internet. um lugar pequeno onde eu guardo as coisas que eu gosto.</p>
         </section>
 
-        <section id="friends" class="content-section revela" data-rotulo="pessoas">
-            <p class="muted">pessoas que fazem meu dia melhor.</p>
-            <ul class="friend-list">
-                <li>
-                    <a href="https://discord.com/users/1431635702579200004" target="_blank">
-                        <img class="friend-avatar" src="" alt="emily" data-discord-id="1431635702579200004" data-fallback="E">
-                        <span class="friend-name">emily</span>
-                        <span class="friend-user">discord</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://discord.com/users/732388924629975061" target="_blank">
-                        <img class="friend-avatar" src="" alt="biel" data-discord-id="732388924629975061" data-fallback="B">
-                        <span class="friend-name">biel</span>
-                        <span class="friend-user">discord</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://discord.com/users/1285208151297359903" target="_blank">
-                        <img class="friend-avatar" src="" alt="neguinho" data-discord-id="1285208151297359903" data-fallback="N">
-                        <span class="friend-name">neguinho</span>
-                        <span class="friend-user">discord</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://discord.com/users/527177470953259008" target="_blank">
-                        <img class="friend-avatar" src="" alt="yreizy" data-discord-id="527177470953259008" data-fallback="Y">
-                        <span class="friend-name">yreizy</span>
-                        <span class="friend-user">discord</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
+        <section id="friends" class="content-section revela" aria-labelledby="friends-title">
+            <div class="friends-heading">
+                <h2 id="friends-title">Pessoas</h2>
+                <button type="button" id="gallery-toggle" class="gallery-toggle" aria-expanded="false" aria-controls="galeria">Galeria</button>
+            </div>
 
-        <section id="galeria" class="content-section revela" data-rotulo="galeria" aria-label="Galeria">
-            <figure class="gallery-photo">
-                <div class="gallery-scene">
-                    <img src="source/galeria/minecraft-portal.png" width="1768" height="992" loading="lazy" alt="Três personagens de armadura de diamante sobre um portal do End no Minecraft.">
-                    <a class="gallery-name" style="--x: 49.9%; --y: 46.6%; --stem: 9px" href="https://discord.com/users/947175002007015484" target="_blank" rel="noopener" aria-label="Perfil de ythayla no Discord">ythayla <i class="fab fa-discord" aria-hidden="true"></i></a>
-                    <span class="gallery-name" style="--x: 55.8%; --y: 44.8%; --stem: 40px">neguinho</span>
-                    <span class="gallery-name" style="--x: 62.2%; --y: 47.9%; --stem: 9px">biel</span>
-                </div>
-            </figure>
+            <div id="friends-list">
+                <p class="muted">pessoas que fazem meu dia melhor.</p>
+                <ul class="friend-list">
+                    <li>
+                        <a href="https://discord.com/users/1431635702579200004" target="_blank">
+                            <img class="friend-avatar" src="" alt="emily" data-discord-id="1431635702579200004" data-fallback="E">
+                            <span class="friend-name">emily</span>
+                            <span class="friend-user">discord</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://discord.com/users/732388924629975061" target="_blank">
+                            <img class="friend-avatar" src="" alt="biel" data-discord-id="732388924629975061" data-fallback="B">
+                            <span class="friend-name">biel</span>
+                            <span class="friend-user">discord</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://discord.com/users/1285208151297359903" target="_blank">
+                            <img class="friend-avatar" src="" alt="neguinho" data-discord-id="1285208151297359903" data-fallback="N">
+                            <span class="friend-name">neguinho</span>
+                            <span class="friend-user">discord</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://discord.com/users/527177470953259008" target="_blank">
+                            <img class="friend-avatar" src="" alt="yreizy" data-discord-id="527177470953259008" data-fallback="Y">
+                            <span class="friend-name">yreizy</span>
+                            <span class="friend-user">discord</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <section id="galeria" aria-label="Galeria" hidden>
+                <figure class="gallery-photo">
+                    <div class="gallery-scene">
+                        <img src="source/galeria/minecraft-portal.png" width="1768" height="992" loading="lazy" alt="Três personagens de armadura de diamante sobre um portal do End no Minecraft.">
+                        <a class="gallery-name" style="--x: 49%; --y: 44%" href="https://discord.com/users/947175002007015484" target="_blank" rel="noopener" aria-label="Perfil de ythayla no Discord">ythayla <i class="fab fa-discord" aria-hidden="true"></i></a>
+                        <a class="gallery-name" style="--x: 55.8%; --y: 33%" href="https://discord.com/users/1285208151297359903" target="_blank" rel="noopener" aria-label="Perfil de neguinho no Discord">neguinho <i class="fab fa-discord" aria-hidden="true"></i></a>
+                        <a class="gallery-name" style="--x: 63%; --y: 45.5%" href="https://discord.com/users/732388924629975061" target="_blank" rel="noopener" aria-label="Perfil de biel no Discord">biel <i class="fab fa-discord" aria-hidden="true"></i></a>
+                    </div>
+                </figure>
+            </section>
         </section>
 
         <section id="contact" class="content-section revela" data-rotulo="onde me achar">

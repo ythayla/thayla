@@ -37,6 +37,22 @@
     espia();
 })();
 
+(function() {
+    var botao = document.getElementById('gallery-toggle');
+    var galeria = document.getElementById('galeria');
+    var pessoas = document.getElementById('friends-list');
+    if (!botao || !galeria || !pessoas) return;
+
+    function mostrarGaleria(aberta) {
+        galeria.hidden = !aberta;
+        pessoas.hidden = aberta;
+        botao.setAttribute('aria-expanded', String(aberta));
+    }
+    botao.addEventListener('click', function() {
+        mostrarGaleria(galeria.hidden);
+    });
+    if (window.location.hash === '#galeria') mostrarGaleria(true);
+})();
 var uiHidden = false;
 function toggleUI() {
     var content = document.getElementById('content');
