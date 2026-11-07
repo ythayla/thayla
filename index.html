@@ -16,9 +16,9 @@
 </head>
 <body>
 
-<div id="view-toggle" class="active" title="esconder interface">
-    <i class="fas fa-eye" id="view-icon"></i>
-</div>
+<button type="button" id="view-toggle" class="active" title="esconder interface" aria-label="esconder interface" aria-controls="content">
+    <i class="fas fa-eye" id="view-icon" aria-hidden="true"></i>
+</button>
 
 <main class="page-wrap">
     <div id="content">
@@ -43,6 +43,7 @@
             <button class="tab" data-page="extra">+</button>
             <button class="tab" data-page="selos">estampas</button>
             <button class="tab" data-page="eu">eu</button>
+            <button type="button" class="tab" data-page="visitas">livro de visitas</button>
         </nav>
 
         <section id="about" class="content-section revela" data-rotulo="sobre">
@@ -229,6 +230,30 @@
                 <span class="wv-count" id="wv-count" hidden>—</span>
             </div>
             </div>
+        </section>
+
+        <section id="visitas" class="content-section revela" aria-labelledby="guestbook-title">
+            <h2 class="guestbook-title" id="guestbook-title">Livro de visitas</h2>
+            <p class="muted">passou por aqui? deixa um recado e assina com seu nick ♡</p>
+            <form id="guestbook-form" class="guestbook-form" method="post" action="/api/recados">
+                <fieldset id="guestbook-fields">
+                    <label for="guestbook-nick">seu nick</label>
+                    <input id="guestbook-nick" name="nick" autocomplete="nickname" maxlength="30" required>
+                    <label for="guestbook-message">seu recado</label>
+                    <textarea id="guestbook-message" name="message" rows="4" maxlength="300" required></textarea>
+                    <div class="guestbook-form-footer">
+                        <button type="submit" id="guestbook-submit" class="guestbook-button" disabled>deixar recado</button>
+                        <small>até 300 caracteres · recado público</small>
+                    </div>
+                </fieldset>
+                <p id="guestbook-submit-status" class="guestbook-status" role="status"></p>
+            </form>
+
+            <h3 class="guestbook-list-title">recados</h3>
+            <p id="guestbook-list-status" class="guestbook-status" role="status"></p>
+            <button type="button" id="guestbook-retry" class="guestbook-button" hidden>tentar de novo</button>
+            <ul class="guestbook-entries" id="guestbook-entries" aria-label="Recados do livro de visitas"></ul>
+            <noscript><p class="muted">ative o JavaScript para ler e deixar recados.</p></noscript>
         </section>
 
 <footer class="site-footer">

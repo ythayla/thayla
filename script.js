@@ -54,12 +54,16 @@
     if (window.location.hash === '#galeria') mostrarGaleria(true);
 })();
 var uiHidden = false;
+var viewToggle = document.getElementById('view-toggle');
 function toggleUI() {
     var content = document.getElementById('content');
     var icon = document.getElementById('view-icon');
     var overlay = document.getElementById('overlay');
     if (overlay && overlay.style.display !== 'none') return;
 
+    content.inert = uiHidden;
+    viewToggle.title = uiHidden ? 'mostrar interface' : 'esconder interface';
+    viewToggle.setAttribute('aria-label', viewToggle.title);
     if (uiHidden) {
         content.style.opacity = '0';
         content.style.pointerEvents = 'none';
@@ -70,14 +74,7 @@ function toggleUI() {
         if (icon) icon.className = 'fas fa-eye';
     }
 }
-document.addEventListener('keydown', function(e) {
-    if (e.key !== 'Tab') return;
-    e.preventDefault();
-    if (e.repeat) return;
-    uiHidden = !uiHidden;
-    toggleUI();
-});
-document.getElementById('view-toggle').addEventListener('click', function() {
+viewToggle.addEventListener('click', function() {
     uiHidden = !uiHidden;
     toggleUI();
 });
@@ -701,4 +698,121 @@ function copyName(text) {
             v.textContent = 'nao consegui carregar o last.fm';
             galEl.appendChild(v);
         });
+})();
+
+(function() {
+    var secao = document.getElementById('visitas');
+    if (!secao) return;
+
+    var formulario = document.getElementById('guestbook-form');
+    var campos = document.getElementById('guestbook-fields');
+    var campoNick = document.getElementById('guestbook-nick');
+    var campoRecado = document.getElementById('guestbook-message');
+    var enviar = document.getElementById('guestbook-submit');
+    var mensagemEnvio = document.getElementById('guestbook-submit-status');
+    var mensagemLista = document.getElementById('guestbook-list-status');
+    var tentarNovamente = document.getElementById('guestbook-retry');
+    var lista = document.getElementById('guestbook-entries');
+    var rascunho = null;
+    var formatarData = new Intl.DateTimeFormat('pt-BR', {
+        dateStyle: 'short',
+        timeZone: 'America/Bahia'
+    });
+
+    async function pedirRecados(opcoes, erroPadrao) {
+        var resposta = await fetch('/api/recados', opcoes).catch(function() {
+            throw new Error(erroPadrao);
+        });
+        var dados = await resposta.json().catch(function() { return null; });
+        if (!resposta.ok || !dados || !Array.isArray(dados.entries)) {
+            throw new Error((dados && dados.error) || erroPadrao);
+        }
+        return dados.entries;
+    }
+
+    function mostrarRecados(recados) {
+        var itens = document.createDocumentFragment();
+        recados.slice().sort(function(a, b) {
+            return Date.parse(b.createdAt) - Date.parse(a.createdAt);
+        }).forEach(function(recado) {
+            var item = document.createElement('li');
+            var cabecalho = document.createElement('div');
+            var nick = document.createElement('strong');
+            var data = document.createElement('time');
+            var mensagem = document.createElement('p');
+            cabecalho.className = 'guestbook-entry-header';
+            nick.textContent = recado.nick;
+            data.dateTime = recado.createdAt;
+            data.textContent = formatarData.format(new Date(recado.createdAt));
+            mensagem.textContent = recado.message;
+            cabecalho.append(nick, data);
+            item.append(cabecalho, mensagem);
+            itens.append(item);
+        });
+        lista.replaceChildren(itens);
+        mensagemLista.textContent = recados.length ? '' : 'ainda não tem recados. deixa o primeiro!';
+        tentarNovamente.hidden = true;
+    }
+
+    async function carregarRecados() {
+        enviar.disabled = true;
+        tentarNovamente.hidden = true;
+        mensagemLista.textContent = 'carregando recados…';
+        try {
+            mostrarRecados(await pedirRecados({ cache: 'no-store' }, 'não deu pra carregar os recados.'));
+        } catch (erro) {
+            mensagemLista.textContent = erro.message;
+            tentarNovamente.hidden = false;
+        } finally {
+            enviar.disabled = false;
+        }
+    }
+
+    tentarNovamente.addEventListener('click', carregarRecados);
+    formulario.addEventListener('submit', async function(evento) {
+        evento.preventDefault();
+        if (enviar.disabled || campos.disabled) return;
+
+        var nick = campoNick.value.trim();
+        var message = campoRecado.value.trim();
+        if (!nick || !message) {
+            mensagemEnvio.textContent = 'preenche o nick e o recado antes de enviar.';
+            (nick ? campoRecado : campoNick).focus();
+            return;
+        }
+
+        campos.disabled = true;
+        tentarNovamente.disabled = true;
+        mensagemEnvio.textContent = 'enviando…';
+        try {
+            if (!rascunho || rascunho.nick !== nick || rascunho.message !== message) {
+                rascunho = { id: crypto.randomUUID(), nick: nick, message: message };
+            }
+            var recados = await pedirRecados({
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(rascunho)
+            }, 'não deu pra enviar o recado. tenta de novo.');
+            mostrarRecados(recados);
+            formulario.reset();
+            rascunho = null;
+            mensagemEnvio.textContent = 'recado publicado ♡';
+        } catch (erro) {
+            mensagemEnvio.textContent = erro.message;
+        } finally {
+            campos.disabled = false;
+            tentarNovamente.disabled = false;
+        }
+    });
+
+    if ('IntersectionObserver' in window) {
+        var observador = new IntersectionObserver(function(entradas) {
+            if (!entradas.some(function(entrada) { return entrada.isIntersecting; })) return;
+            observador.disconnect();
+            carregarRecados();
+        });
+        observador.observe(secao);
+    } else {
+        carregarRecados();
+    }
 })();
