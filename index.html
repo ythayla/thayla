@@ -249,10 +249,15 @@
                 <p id="guestbook-submit-status" class="guestbook-status" role="status"></p>
             </form>
 
-            <h3 class="guestbook-list-title">recados</h3>
+            <h3 id="guestbook-list-title" class="guestbook-list-title" tabindex="-1">recados</h3>
             <p id="guestbook-list-status" class="guestbook-status" role="status"></p>
             <button type="button" id="guestbook-retry" class="guestbook-button" hidden>tentar de novo</button>
             <ul class="guestbook-entries" id="guestbook-entries" aria-label="Recados do livro de visitas"></ul>
+            <nav id="guestbook-pages" class="guestbook-pages" aria-label="Páginas do livro de visitas" hidden>
+                <button type="button" id="guestbook-previous" class="guestbook-button" aria-controls="guestbook-entries">anterior</button>
+                <span id="guestbook-page-number" role="status"></span>
+                <button type="button" id="guestbook-next" class="guestbook-button" aria-controls="guestbook-entries">próxima</button>
+            </nav>
             <noscript><p class="muted">ative o JavaScript para ler e deixar recados.</p></noscript>
         </section>
 

@@ -1136,6 +1136,7 @@ body { position: relative; }
 .guestbook-button:hover:not(:disabled) { border-color: #f2d89e; }
 .guestbook-button:disabled { opacity: 0.6; }
 .guestbook-list-title {
+    scroll-margin-top: 100px;
     margin-bottom: 8px;
     color: #c9a86a;
     font: 0.78rem 'JetBrains Mono', monospace;
@@ -1146,6 +1147,16 @@ body { position: relative; }
     display: grid;
     gap: 10px;
     list-style: none;
+}
+.guestbook-pages:not([hidden]) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-top: 16px;
+    color: #ddd;
+    font: 0.72rem 'JetBrains Mono', monospace;
 }
 .guestbook-entry-header {
     display: flex;

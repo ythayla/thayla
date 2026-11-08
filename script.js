@@ -713,28 +713,43 @@ function copyName(text) {
     var mensagemLista = document.getElementById('guestbook-list-status');
     var tentarNovamente = document.getElementById('guestbook-retry');
     var lista = document.getElementById('guestbook-entries');
+    var tituloLista = document.getElementById('guestbook-list-title');
+    var paginacao = document.getElementById('guestbook-pages');
+    var anterior = document.getElementById('guestbook-previous');
+    var proxima = document.getElementById('guestbook-next');
+    var numeroPagina = document.getElementById('guestbook-page-number');
+    var paginaAtual = 1;
+    var totalPaginas = 1;
+    var paginaPendente = 1;
+    var ocupado = false;
     var rascunho = null;
     var formatarData = new Intl.DateTimeFormat('pt-BR', {
         dateStyle: 'short',
         timeZone: 'America/Bahia'
     });
 
-    async function pedirRecados(opcoes, erroPadrao) {
-        var resposta = await fetch('/api/recados', opcoes).catch(function() {
+    async function pedirRecados(pagina, opcoes, erroPadrao) {
+        var resposta = await fetch('/api/recados?pagina=' + pagina, opcoes).catch(function() {
             throw new Error(erroPadrao);
         });
         var dados = await resposta.json().catch(function() { return null; });
-        if (!resposta.ok || !dados || !Array.isArray(dados.entries)) {
+        if (!resposta.ok || !dados || !Array.isArray(dados.entries) ||
+            !Number.isInteger(dados.page) || !Number.isInteger(dados.totalPages)) {
             throw new Error((dados && dados.error) || erroPadrao);
         }
-        return dados.entries;
+        return dados;
     }
 
-    function mostrarRecados(recados) {
+    function atualizarBotoes() {
+        enviar.disabled = ocupado;
+        tentarNovamente.disabled = ocupado;
+        anterior.disabled = ocupado || paginaAtual <= 1;
+        proxima.disabled = ocupado || paginaAtual >= totalPaginas;
+    }
+
+    function mostrarRecados(dados) {
         var itens = document.createDocumentFragment();
-        recados.slice().sort(function(a, b) {
-            return Date.parse(b.createdAt) - Date.parse(a.createdAt);
-        }).forEach(function(recado) {
+        dados.entries.forEach(function(recado) {
             var item = document.createElement('li');
             var cabecalho = document.createElement('div');
             var nick = document.createElement('strong');
@@ -750,28 +765,42 @@ function copyName(text) {
             itens.append(item);
         });
         lista.replaceChildren(itens);
-        mensagemLista.textContent = recados.length ? '' : 'ainda não tem recados. deixa o primeiro!';
+        mensagemLista.textContent = dados.entries.length ? '' : 'ainda não tem recados. deixa o primeiro!';
+        paginaAtual = dados.page;
+        totalPaginas = dados.totalPages;
+        paginacao.hidden = totalPaginas <= 1;
+        numeroPagina.textContent = 'página ' + paginaAtual + ' de ' + totalPaginas;
         tentarNovamente.hidden = true;
     }
 
-    async function carregarRecados() {
-        enviar.disabled = true;
+    async function carregarRecados(pagina, moverFoco) {
+        if (ocupado) return;
+        ocupado = true;
+        paginaPendente = pagina;
+        atualizarBotoes();
         tentarNovamente.hidden = true;
         mensagemLista.textContent = 'carregando recados…';
         try {
-            mostrarRecados(await pedirRecados({ cache: 'no-store' }, 'não deu pra carregar os recados.'));
+            mostrarRecados(await pedirRecados(pagina, { cache: 'no-store' }, 'não deu pra carregar os recados.'));
+            if (moverFoco) {
+                tituloLista.focus({ preventScroll: true });
+                tituloLista.scrollIntoView({ block: 'start' });
+            }
         } catch (erro) {
             mensagemLista.textContent = erro.message;
             tentarNovamente.hidden = false;
         } finally {
-            enviar.disabled = false;
+            ocupado = false;
+            atualizarBotoes();
         }
     }
 
-    tentarNovamente.addEventListener('click', carregarRecados);
+    anterior.addEventListener('click', function() { carregarRecados(paginaAtual - 1, true); });
+    proxima.addEventListener('click', function() { carregarRecados(paginaAtual + 1, true); });
+    tentarNovamente.addEventListener('click', function() { carregarRecados(paginaPendente, true); });
     formulario.addEventListener('submit', async function(evento) {
         evento.preventDefault();
-        if (enviar.disabled || campos.disabled) return;
+        if (enviar.disabled || ocupado) return;
 
         var nick = campoNick.value.trim();
         var message = campoRecado.value.trim();
@@ -781,14 +810,15 @@ function copyName(text) {
             return;
         }
 
+        ocupado = true;
         campos.disabled = true;
-        tentarNovamente.disabled = true;
+        atualizarBotoes();
         mensagemEnvio.textContent = 'enviando…';
         try {
             if (!rascunho || rascunho.nick !== nick || rascunho.message !== message) {
                 rascunho = { id: crypto.randomUUID(), nick: nick, message: message };
             }
-            var recados = await pedirRecados({
+            var recados = await pedirRecados(1, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(rascunho)
@@ -800,8 +830,9 @@ function copyName(text) {
         } catch (erro) {
             mensagemEnvio.textContent = erro.message;
         } finally {
+            ocupado = false;
             campos.disabled = false;
-            tentarNovamente.disabled = false;
+            atualizarBotoes();
         }
     });
 
@@ -809,10 +840,10 @@ function copyName(text) {
         var observador = new IntersectionObserver(function(entradas) {
             if (!entradas.some(function(entrada) { return entrada.isIntersecting; })) return;
             observador.disconnect();
-            carregarRecados();
+            carregarRecados(1);
         });
         observador.observe(secao);
     } else {
-        carregarRecados();
+        carregarRecados(1);
     }
 })();
